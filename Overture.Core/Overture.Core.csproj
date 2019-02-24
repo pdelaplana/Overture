@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Domain\InitialData\business_services.csv" />
+    <None Remove="Domain\InitialData\business_services.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\InitialData\business_services.csv" />
+    <EmbeddedResource Include="Domain\InitialData\business_services.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="CsvHelper" Version="12.1.1" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Logging\" />
+    <Folder Include="Application\UseCases\Registration\" />
+    <Folder Include="Domain\Models\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<!-- Dashboard Container -->
+<div class="dashboard-container">
+
+  <app-management-sidebar></app-management-sidebar>
+
+  <!-- Dashboard Content
+	================================================== -->
+	<div class="dashboard-content-container" data-simplebar="init">
+      <div class="dashboard-content-inner" >
+        <router-outlet></router-outlet>
+        <app-management-footer></app-management-footer>
+      </div>
+  </div>
+
+</div>
+<!-- Dashboard Container / End -->

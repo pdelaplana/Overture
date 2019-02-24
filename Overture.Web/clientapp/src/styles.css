@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* 2018-12-23 PDP */
+#navigation > ul > li.no-dropdown > a{
+  padding: 7px 9px!important;
+}
+

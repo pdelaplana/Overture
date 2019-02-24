@@ -1,0 +1,95 @@
+<app-header></app-header>
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+				<h2>List Your Business</h2>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Page Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		<div class="col-xl-5 offset-xl-3">
+
+			<div class="login-register-page">
+				<!-- Welcome Text -->
+				<div class="welcome-text">
+					<h3 style="font-size: 26px;">Let's create your account!</h3>
+					<span>Already have an account? <a href="pages-login.html">Log In!</a></span>
+				</div>
+
+				      
+				<!-- Form -->
+        <form [formGroup]="registrationForm"  novalidate>
+          <!-- Account Type -->
+				<div class="account-type">
+            <div>
+              <input type="radio"  id="freelancer-radio" formControlName="registerType" name="registerType" [value]="personal" [checked]="f.registerType.value == 'personal'"  class="account-type-radio" >
+              <label for="freelancer-radio" class="ripple-effect-dark" (click)="setAccountType('personal')"><i class="icon-material-outline-account-circle"></i> I'm looking for help</label>
+            </div>
+  
+            <div>
+              <input type="radio"  id="employer-radio" formControlName="registerType" name="registerType" [value]="business" [checked]="f.registerType.value == 'business'"  class="account-type-radio" >
+              <label for="employer-radio" class="ripple-effect-dark" (click)="setAccountType('business')"><i class="icon-material-outline-business-center"></i> I can help</label>
+            </div>
+          </div>
+  
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            <div *ngIf="f.email.errors.emailInUse">Email is already in use</div>
+          </div>  
+          <div class="input-with-icon-left">
+						<i class="icon-material-baseline-mail-outline"></i>
+						<input type="text" class="input-text with-border" formControlName="email" placeholder="Email Address" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          </div>
+          
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+          </div>
+					<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+						<i class="icon-material-outline-lock"></i>
+						<input type="password" class="input-text with-border" formControlName="password" placeholder="Password" >
+          </div>
+          
+          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+          </div>
+					<div class="input-with-icon-left">
+						<i class="icon-material-outline-lock"></i>
+						<input type="password" class="input-text with-border" formControlName="confirmPassword" placeholder="Repeat Password" />
+          </div>
+          
+        </form>
+
+        <p>Form value: {{ f.registerType.value | json }}</p> 
+        <!-- Button -->
+        <button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"  (click)="onSubmit()">Register <i class="icon-material-outline-arrow-right-alt"></i></button>
+      
+				<!-- Social Login -->
+				<div class="social-login-separator"><span>or</span></div>
+				<div class="social-login-buttons">
+					<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Register via Facebook</button>
+					<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Register via Google+</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+
+<app-footer></app-footer>
