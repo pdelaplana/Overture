@@ -7,11 +7,15 @@
   <ItemGroup>
     <None Remove="Domain\InitialData\business_services.csv" />
     <None Remove="Domain\InitialData\business_services.json" />
+    <None Remove="Domain\InitialData\contact_methods.csv" />
+    <None Remove="Domain\InitialData\service_areas.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Domain\InitialData\business_services.csv" />
     <EmbeddedResource Include="Domain\InitialData\business_services.json" />
+    <EmbeddedResource Include="Domain\InitialData\contact_methods.csv" />
+    <EmbeddedResource Include="Domain\InitialData\service_areas.csv" />
   </ItemGroup>
 
   <ItemGroup>

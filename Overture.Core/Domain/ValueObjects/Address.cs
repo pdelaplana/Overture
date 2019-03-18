@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Overture.Core.Domain.ValueObjects
 {
-    public struct Address
+    public class Address
     {
 		public string StreetAddress1 { get; set; }
 		public string StreetAddress2 { get; set; }

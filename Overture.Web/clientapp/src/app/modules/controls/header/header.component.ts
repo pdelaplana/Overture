@@ -1,3 +1,4 @@
+import { AuthenticationService } from '@app/_services/authentication.service';
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 
 @Component({
@@ -6,8 +7,8 @@ import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  loggedInAsCustomer:boolean;
-  loggedInAsBusinessOwner:boolean;
+  private loggedInAsCustomer:boolean;
+  private loggedInAsBusinessOwner:boolean;
   isCloned:boolean;
   position: string;
 
@@ -29,16 +30,41 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  constructor(private eRef: ElementRef) { 
-
+  constructor (
+    private eRef: ElementRef,
+    private authenticationService: AuthenticationService
+  ) { 
+    
   }
 
   ngOnInit() {
-    this.loggedInAsBusinessOwner=true;
-    this.loggedInAsCustomer=true;
+    let user = this.authenticationService.currentUserValue; 
+    if (user){
+      this.loggedInAsBusinessOwner=user.loggedInAsBusiness;
+      this.loggedInAsCustomer=!this.loggedInAsCustomer;
+    } else {
+      this.loggedInAsBusinessOwner=false;
+      this.loggedInAsCustomer=false;
+    }
   }
 
-  
+  public get authenticated(): boolean {
+    return this.loggedInAsCustomer || this.loggedInAsCustomer;
+  }
+
+  public get authenticatedAsBusiness(): boolean  {
+    return this.loggedInAsBusinessOwner;
+  }
+
+  public get authenticatedAsCustomer(): boolean{
+    return this.loggedInAsCustomer;
+  }
+
+  public login(){
+    //this.authenticationService.login();
+  }
+
+
 
   
 }

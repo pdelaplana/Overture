@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Overture.Core.Application.Models;
 using Overture.Core.Application.UseCases;
-using Overture.Core.Domain.Entities;
 using Overture.Core.Application.UseCases.ManageServiceCategories;
 
 

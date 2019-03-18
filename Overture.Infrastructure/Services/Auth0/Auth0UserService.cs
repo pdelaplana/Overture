@@ -16,7 +16,7 @@ namespace Overture.Infrastructure.Services.Auth0
 	{
 		private ManagementApiClient _client = null;
 
-		private string GetAccessToken(IOptions<Auth0Settings> options)
+		private string GetAccessToken(IOptions<Auth0ManagementSettings> options)
 		{
 			var restClient = new RestClient($"https://{options.Value.Domain}/oauth/token");
 			var request = new RestRequest(Method.POST);
@@ -44,7 +44,7 @@ namespace Overture.Infrastructure.Services.Auth0
 			};
 		}
 
-		public Auth0UserService(IOptions<Auth0Settings> options)
+		public Auth0UserService(IOptions<Auth0ManagementSettings> options)
 		{
 			var token = GetAccessToken(options);
 			_client = new ManagementApiClient(token, options.Value.Domain);
@@ -68,5 +68,7 @@ namespace Overture.Infrastructure.Services.Auth0
 			var users = await _client.Users.GetUsersByEmailAsync(email);
 			return MapUser(users.FirstOrDefault());
 		}
+
+		
 	}
 }

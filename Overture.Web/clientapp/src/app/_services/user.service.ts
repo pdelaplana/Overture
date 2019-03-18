@@ -11,17 +11,17 @@ import { ApiResponse } from '@app/_models/api-response';
   providedIn: 'root'
 })
 export class UserService {
-  private url = environment.baseUrl + 'api/users';
-
+  private apiUrl = environment.baseUrl + 'api/users';
 
   constructor(
     private http: HttpClient
   ) { }
 
   getUserByEmail(email:string):Observable<User>{
-    return this.http.get<ApiResponse>(this.url, { params: { email: email }} )
+    return this.http.get<ApiResponse>(this.apiUrl, { params: { email: email }} )
       .pipe(
         map(result => { return <User>result.data }),
+        
       )
   }
 }

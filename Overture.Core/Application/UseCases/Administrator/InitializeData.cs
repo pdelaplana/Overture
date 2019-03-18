@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 using CsvHelper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Overture.Core.Application;
 using Overture.Core.Application.Models;
-using Overture.Core.Application.UseCases;
-using Overture.Core.Application.UseCases.ManageServices;
 using Overture.Core.Domain.Entities;
+using Overture.Core.Domain.ValueObjects;
 using Overture.Core.Repositories;
+using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.Administrator
 {
     public class InitializeData : IUseCase<InitializeDataModel>
     {
 		public bool DeleteDataIfExists { get; set; }
+		public bool IntializeMetaInformation { get; set; }
 		public bool PopulateBusinessServices { get; set; }
 		public bool PoplateContactMethods { get; set; }
     }
@@ -28,12 +30,16 @@ namespace Overture.Core.Application.UseCases.Administrator
 	{
 		public IBusinessServiceRepository _businessServiceRepository = null;
 		public IBusinessServiceCategoryRepository _businessServiceCategoryRepository = null;
+		public IMetaInformationService _metaInformationService = null;
 
-		public InitializeDataHandler(IBusinessServiceRepository businessServiceRepository, 
-			IBusinessServiceCategoryRepository businessServiceCategoryRepository)
+		public InitializeDataHandler(
+			IBusinessServiceRepository businessServiceRepository, 
+			IBusinessServiceCategoryRepository businessServiceCategoryRepository,
+			IMetaInformationService metaInformationService)
 		{
 			_businessServiceRepository = businessServiceRepository;
 			_businessServiceCategoryRepository = businessServiceCategoryRepository;
+			_metaInformationService = metaInformationService;
 		}
 
 		public async Task<UseCaseResult<InitializeDataModel>> Handle(InitializeData request, CancellationToken cancellationToken)
@@ -55,10 +61,44 @@ namespace Overture.Core.Application.UseCases.Administrator
 							counter++;
 						}
 					}
-
-
-					
 				}
+
+				if (request.IntializeMetaInformation)
+				{
+					counter = 0;
+					var serviceAreas = new List<ServiceArea>();
+					
+					using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.service_areas.csv"))))
+					{
+						while (reader.Read())
+						{
+							var record = reader.GetRecord<dynamic>();
+							serviceAreas.Add(new ServiceArea
+							{
+								Name = record.Name
+							});
+							counter++;
+						}
+					};
+
+					var contactMethods = new List<string>();
+					using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.contact_methods.csv"))))
+					{
+						while (reader.Read())
+						{
+							var record = reader.GetRecord<dynamic>();
+							contactMethods.Add(record.Name);
+							counter++;
+						}
+					}
+
+					_metaInformationService.Current = new Application.MetaInformation
+					{
+						ServiceAreas = serviceAreas,
+						ContactMethodTypes = contactMethods.ToArray()
+					}; 
+				}
+
 				return new UseCaseResult<InitializeDataModel>
 				{
 					ResultCode = "Ok",

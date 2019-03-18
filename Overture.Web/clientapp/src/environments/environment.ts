@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:44371/'  
+  baseUrl: 'https://localhost:44371/',
+  auth0 :{
+    clientId: 'glOA9X6kZ-A7DtLdRvpumpJCYyQou4sk',
+    domain: 'snapquotes.auth0.com',
+    redirectUri: 'https://localhost:44371/'
+  }  
 };
 
 /*

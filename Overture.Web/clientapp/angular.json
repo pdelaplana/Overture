@@ -23,13 +23,20 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              "src/assets/css/ng-select.custom.css",
               "src/assets/css/bootstrap-grid.css",
               "src/assets/css/style.css",
               "src/assets/css/colors/blue.css",
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/simplebar.min.js" 
+              "node_modules/auth0-js/build/auth0.js",
+              "src/assets/js/jquery-3.3.1.min.js",
+              "src/assets/js/simplebar.min.js",
+              "src/assets/js/snackbar.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/utils.js"
             ]
           },
           "configurations": {

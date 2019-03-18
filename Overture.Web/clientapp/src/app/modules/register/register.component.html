@@ -22,59 +22,11 @@
 				<!-- Welcome Text -->
 				<div class="welcome-text">
 					<h3 style="font-size: 26px;">Let's create your account!</h3>
-					<span>Already have an account? <a href="pages-login.html">Log In!</a></span>
+					<span>Already have an account? <a [routerLink]="['../signin']">Sign In!</a></span>
 				</div>
 
-				      
-				<!-- Form -->
-        <form [formGroup]="registrationForm"  novalidate>
-          <!-- Account Type -->
-				<div class="account-type">
-            <div>
-              <input type="radio"  id="freelancer-radio" formControlName="registerType" name="registerType" [value]="personal" [checked]="f.registerType.value == 'personal'"  class="account-type-radio" >
-              <label for="freelancer-radio" class="ripple-effect-dark" (click)="setAccountType('personal')"><i class="icon-material-outline-account-circle"></i> I'm looking for help</label>
-            </div>
-  
-            <div>
-              <input type="radio"  id="employer-radio" formControlName="registerType" name="registerType" [value]="business" [checked]="f.registerType.value == 'business'"  class="account-type-radio" >
-              <label for="employer-radio" class="ripple-effect-dark" (click)="setAccountType('business')"><i class="icon-material-outline-business-center"></i> I can help</label>
-            </div>
-          </div>
-  
-          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Email is required</div>
-            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-            <div *ngIf="f.email.errors.emailInUse">Email is already in use</div>
-          </div>  
-          <div class="input-with-icon-left">
-						<i class="icon-material-baseline-mail-outline"></i>
-						<input type="text" class="input-text with-border" formControlName="email" placeholder="Email Address" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-          </div>
-          
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
-            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-          </div>
-					<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
-						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" formControlName="password" placeholder="Password" >
-          </div>
-          
-          <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
-            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
-          </div>
-					<div class="input-with-icon-left">
-						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" formControlName="confirmPassword" placeholder="Repeat Password" />
-          </div>
-          
-        </form>
+        <app-registration-form [accountType]="accountType"></app-registration-form>
 
-        <p>Form value: {{ f.registerType.value | json }}</p> 
-        <!-- Button -->
-        <button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"  (click)="onSubmit()">Register <i class="icon-material-outline-arrow-right-alt"></i></button>
-      
 				<!-- Social Login -->
 				<div class="social-login-separator"><span>or</span></div>
 				<div class="social-login-buttons">

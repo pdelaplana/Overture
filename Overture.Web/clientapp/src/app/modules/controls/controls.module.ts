@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
@@ -9,6 +10,7 @@ import { BackgroundImageComponent } from './background-image/background-image.co
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ManagementRoutingModule } from '@app/modules/management/management-routing.module';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 @NgModule({
   declarations: [
@@ -17,18 +19,22 @@ import { ManagementRoutingModule } from '@app/modules/management/management-rout
     BackgroundImageComponent,
     HeaderMessagesComponent,
     HeaderNotificationsComponent,
-    HeaderUserMenuComponent,    
+    HeaderUserMenuComponent,
+    RegistrationFormComponent,    
   ],
   imports: [
     CommonModule,
     MomentModule,
     AppRoutingModule,
-    ManagementRoutingModule
+    ManagementRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    BackgroundImageComponent
+    BackgroundImageComponent,
+    RegistrationFormComponent
   ]
 })
 export class ControlsModule { }

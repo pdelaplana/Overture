@@ -1,0 +1,40 @@
+.ng-select .ng-select-container {
+  
+  height:50px;
+
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder 
+{
+  padding-left:6px;
+  padding-top:6px;
+  height:50px;
+  
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input 
+{
+  padding-left:3px;
+  margin-top:15px;
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container
+{
+  border:1px solid #ccc;
+  box-shadow:none;
+}
+
+.ng-select .ng-select-container .ng-value{
+  color:#2a41e8;
+  padding:5px;
+  text-align:"left";
+  font-family: "Nunito", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:14.7px;
+  line-height:25px;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value  {
+  background-color:rgba(42,65,232,0.07);
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon:hover {
+  background-color:rgba(42,65,232,0.07)!important;
+}

@@ -1,0 +1,7 @@
+:host a{
+  cursor: pointer;
+}
+:host a:hover{
+  color: #2a41e8;  
+}
+
