@@ -18,6 +18,7 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 		public string FileName { get; set; }
 		public string FileType { get; set; }
 		public long FileSize { get; set; }
+		public string ContentType { get; set; }
 	}
 	public class FileStoreService : IFileStoreService
 	{
@@ -60,16 +61,16 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 			}
 		}
 
-		
 		public byte[] Get(string fileReference)
 		{
-			throw new NotImplementedException();
+			var fs = new GridFSBucket(_context.Database);
+			return fs.DownloadAsBytes(new ObjectId(fileReference));
 		}
 
-
-		public Task<byte[]> GetAsync(string fileReference)
+		public async Task<byte[]> GetAsync(string fileReference)
 		{
-			throw new NotImplementedException();
+			var fs = new GridFSBucket(_context.Database);
+			return await fs.DownloadAsBytesAsync(new ObjectId(fileReference));
 		}
 
 		public IFileProperties GetProperties(string fileReference)
@@ -88,7 +89,8 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 						FileReference = fileInfo.Id.ToString(),
 						FileName = fileInfo.Filename,
 						FileType = Path.GetExtension(fileInfo.Filename)?.Substring(1),
-						FileSize = fileInfo.Length
+						FileSize = fileInfo.Length,
+						ContentType = fileInfo.Metadata?.GetValue("contentType").ToString()
 					};
 				}
 			}
@@ -97,10 +99,10 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 
 		
 		
-		public IFileProperties Post(string fileName, byte[] content)
+		public IFileProperties Post(string fileName, byte[] content, string contentType)
 		{
 			var fs = new GridFSBucket(_context.Database);
-			var id = fs.UploadFromBytes(fileName, content);
+			var id = fs.UploadFromBytes(fileName, content, new GridFSUploadOptions { Metadata = new BsonDocument("ContentType", contentType) });
 			if (id != null)
 			{
 				return GetProperties(id.ToString());
@@ -111,10 +113,10 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 			}
 		}
 
-		public async Task<IFileProperties> PostAsync(string fileName, byte[] content)
+		public async Task<IFileProperties> PostAsync(string fileName, byte[] content, string contentType)
 		{
 			var fs = new GridFSBucket(_context.Database);
-			var id = await fs.UploadFromBytesAsync(fileName, content);
+			var id = await fs.UploadFromBytesAsync(fileName, content, new GridFSUploadOptions { Metadata = new BsonDocument("contentType", contentType) });
 			if (id != null)
 			{
 				return GetProperties(id.ToString());

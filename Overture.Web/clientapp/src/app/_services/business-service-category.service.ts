@@ -44,7 +44,6 @@ export class BusinessServiceCategoryService {
 
 
   get():Observable<BusinessServiceCategory[]>{
-    console.log(this.url);
     return this.http.get<ApiResponse>(this.url)
       .pipe(
         map(result => { return <BusinessServiceCategory[]>result.data }),
@@ -53,7 +52,6 @@ export class BusinessServiceCategoryService {
 
 
   getTopTen():Observable<BusinessServiceCategory[]>{
-    console.log(this.url);
     return this.http.get<ApiResponse>(this.url+'?Top10=true')
       .pipe(
         map(result => { return <BusinessServiceCategory[]>result.data }),

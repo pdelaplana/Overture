@@ -24,6 +24,21 @@ export class BusinessProfileService {
       )
   }
 
+  getByName(bname:string):Observable<Business>{
+    return this.http.get<ApiResponse>(this.url, { params: { name: bname }} )
+      .pipe(
+        map(result => { return <Business>result.data }),
+      )
+  }
+
+  getByAltReference(altReference:string):Observable<Business>{
+    return this.http.get<ApiResponse>(this.url, { params: { altReference: altReference }} )
+      .pipe(
+        map(result => { return <Business>result.data }),
+      )
+  }
+
+
   update(business:Business):Observable<Business>{
     return this.http.put<ApiResponse>(this.url, business)
     .pipe(

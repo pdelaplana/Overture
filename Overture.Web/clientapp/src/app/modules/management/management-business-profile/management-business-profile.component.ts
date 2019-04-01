@@ -1,5 +1,6 @@
+import { ReferenceDataService } from '@app/_services/reference-data.service';
+import { FileStoreService } from './../../../_services/file-store.service';
 import { FileAttachment } from './../../../_models/file-attachment';
-import { BusinessServiceService } from './../../../_services/business-service.service';
 import { NotificationService } from '@app/_services/notification.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { Business } from '@app/_models/business';
@@ -10,7 +11,6 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { ContactMethod } from '@app/_models/contact-method';
 import { Address } from '@app/_models/address';
 import { ServiceArea } from '@app/_models/service-area';
-import { ServiceAreaService } from '@app/_services/service-area.service';
 
 declare var notifyOnChange: any;
 declare var closeNotification: any;
@@ -38,20 +38,21 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private businessProfileService:BusinessProfileService,
-    private businessServiceService: BusinessServiceService,
-    private serviceAreaService: ServiceAreaService,
+    private referenceDataService: ReferenceDataService,
+    private fileStoreService: FileStoreService,
     private notificationService: NotificationService
     ) { }
 
   ngOnInit() {
-    this.businessServiceService.getBusinessServices().subscribe(services => { this.dataSources.businessServices = services });
-    this.serviceAreaService.getServiceAreas().subscribe(areas => {  this.dataSources.serviceAreas = areas  })
+    this.referenceDataService.getBusinessServices().subscribe(services => { this.dataSources.businessServices = services });
+    this.referenceDataService.getServiceAreas().subscribe(areas => {  this.dataSources.serviceAreas = areas  })
     this.userId = this.authenticationService.currentUserValue.userId;
     this.businessProfileForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       owner: ['', [Validators.required]],
       tagline: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      picture:[new FileAttachment()],
       isTrading: [false],
       serviceAreas: [],
       services: [],
@@ -73,11 +74,14 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     
     this.businessProfileService.getByUserId(this.userId)
       .subscribe(businessProfile => {
+        if (businessProfile == null) return;
+
         this.id = businessProfile.id;
         this.name.setValue(businessProfile.name, {onlySelf: true, emitEvent: false});
         this.owner.setValue(businessProfile.owner, {onlySelf: true, emitEvent: false});
         this.tagline.setValue(businessProfile.tagline, {onlySelf: true, emitEvent: false});
         this.description.setValue(businessProfile.description, {onlySelf: true, emitEvent: false});
+        this.picture.setValue(businessProfile.picture, {onlySelf: true, emitEvent: false});
         this.isTrading.setValue(businessProfile.isTrading, {onlySelf: true, emitEvent: false});
         this.serviceAreas.setValue(businessProfile.serviceAreas, {onlySelf: true, emitEvent: false});
         this.services.setValue(businessProfile.businessServices, {onlySelf: true, emitEvent: false});
@@ -115,6 +119,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
   get owner() { return this.businessProfileForm.controls.owner; }
   get tagline() { return this.businessProfileForm.controls.tagline; }
   get description() { return this.businessProfileForm.controls.description; }
+  get picture() { return this.businessProfileForm.controls.picture; }
   get isTrading() { return this.businessProfileForm.controls.isTrading; }  
   get serviceAreas() { return this.businessProfileForm.controls.serviceAreas; }
   get services() { return this.businessProfileForm.controls.services; }
@@ -152,6 +157,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     business.owner = this.owner.value;
     business.description = this.description.value;
     business.tagline = this.tagline.value;
+    business.picture = this.picture.value;
     business.isTrading = this.isTrading.value;
     business.serviceAreas = this.serviceAreas.value
     business.businessServices = this.services.value;
@@ -198,6 +204,22 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     let files = this.fileAttachments.value;
     files.push(fileAttachment);
     this.fileAttachments.setValue(files);
+  }
+
+  deleteFileAttachment(fileReference:string){
+    this.fileStoreService.delete(fileReference).subscribe(
+      result => {
+        if (result){
+          let files : FileAttachment[] = this.fileAttachments.value;
+          files = files.filter(f => f.fileReference!=fileReference);
+          this.fileAttachments.setValue(files);
+        }
+      }
+    )
+  }
+
+  addPicture(fileAttachment: FileAttachment){
+    this.picture.setValue(fileAttachment);
   }
 
   

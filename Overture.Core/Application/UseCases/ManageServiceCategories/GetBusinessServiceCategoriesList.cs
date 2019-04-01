@@ -11,18 +11,23 @@ using Overture.Core.Repositories;
 
 namespace Overture.Core.Application.UseCases.ManageServiceCategories
 {
-	public class GetBusinessServiceCategoriesList : IUseCase<IEnumerable<BusinessServiceCategoryModel>>
+	public class GetBusinessServiceCategoriesList : UseCase<IEnumerable<BusinessServiceCategoryModel>>
 	{
 		public bool Top10 { get; set; }
 	}
 	public class GetBusinessServicesListHandler : IUseCaseHandler<GetBusinessServiceCategoriesList, IEnumerable<BusinessServiceCategoryModel>>
 	{
-		private IBusinessServiceCategoryRepository _repository = null;
+		private IBusinessServiceRepository _businessServiceRepository = null;
+		private IBusinessRepository _businessRepository = null;
 		private IMapper _mapper = null;
 
-		public GetBusinessServicesListHandler(IBusinessServiceCategoryRepository repository, IMapper mapper)
+		public GetBusinessServicesListHandler(
+			IBusinessServiceRepository businessServiceRepository,
+			IBusinessRepository businessRepository,
+			IMapper mapper)
 		{
-			_repository = repository;
+			_businessServiceRepository = businessServiceRepository;
+			_businessRepository = businessRepository;
 			_mapper = mapper;
 		}
 		public async Task<UseCaseResult<IEnumerable<BusinessServiceCategoryModel>>> Handle(GetBusinessServiceCategoriesList request, CancellationToken cancellationToken)
@@ -31,7 +36,16 @@ namespace Overture.Core.Application.UseCases.ManageServiceCategories
 			{
 				return await Task.Run(() =>
 				{
-					var query = _repository.All();
+					//var services = _businessRepository.All().GroupBy(b => b.BusinessServices.GroupBy(s => s.CategoryName).Select(s => s.Key)).ToList();
+					var query = _businessServiceRepository.All()
+								.GroupBy(s=>s.CategoryName)
+								.Select(g => new BusinessServiceCategoryModel
+								{
+									Name = g.Key,
+									CountOfServices = g.Count(),
+									//CountOfBusinesses = _businessRepository.All().Where(b=>b.BusinessServices.Any(ss=>ss.CategoryName==g.Key)).Count()
+									//CountOfBusinesses = services.Where(s=>s.Key.Where(p=>p.))
+								}); 
 					if (request.Top10)
 					{
 						query = query.Take(10);
@@ -40,7 +54,7 @@ namespace Overture.Core.Application.UseCases.ManageServiceCategories
 					{
 						ResultCode = "Ok",
 						ResultText = "GetBusinessSeviceCategories",
-						Data = _mapper.Map<List<BusinessServiceCategoryModel>>(query.ToList())
+						Data = query.ToList()
 					};
 				});
 			}

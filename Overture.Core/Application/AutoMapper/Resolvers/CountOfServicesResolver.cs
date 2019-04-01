@@ -20,7 +20,7 @@ namespace Overture.Core.Application.AutoMapper.Resolvers
 
 		public int Resolve(BusinessServiceCategory source, BusinessServiceCategoryModel destination, int destMember, ResolutionContext context)
 		{
-			return _businessServiceRepository.All().Where(s => s.BusinessServiceCategoryId == source.Id).Count();
+			return _businessServiceRepository.All().Where(s => s.CategoryName == source.Name).Count();
 		}
 	}
 }

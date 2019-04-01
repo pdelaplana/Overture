@@ -11,7 +11,7 @@ using Overture.Core.Repositories;
 	
 namespace Overture.Core.Application.UseCases.ManageServices
 {
-	public class GetBusinessServicesList : IUseCase<IEnumerable<BusinessServiceModel>>
+	public class GetBusinessServicesList : UseCase<IEnumerable<BusinessServiceModel>>
 	{
 	}
 

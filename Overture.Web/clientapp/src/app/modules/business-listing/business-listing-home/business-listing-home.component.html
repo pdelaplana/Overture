@@ -1,0 +1,28 @@
+<!-- Spacer -->
+<div class="margin-top-90"></div>
+<!-- Spacer / End-->
+
+<!-- Page Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4">
+      <app-search-control-panel
+        [selectedCategories]="selectedCategories" 
+        (onServicesCriteriaChange)="changeServicesCriteria($event)" 
+        (onAreasCriteriaChange)="changeAreasCriteria($event)"></app-search-control-panel>
+		</div>
+		<div class="col-xl-9 col-lg-8 content-left-offset">
+
+			<h3 class="page-title">Search Results</h3>
+      <app-search-results 
+        [data]="businesses"
+        [hasSearchRan]="searchHasRan"
+        (onExecuteSearch)="executeSearch()"
+        >
+      </app-search-results>
+		
+		</div>
+	</div>
+</div>
+

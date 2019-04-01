@@ -20,7 +20,7 @@ namespace Overture.Core.Application.AutoMapper.Resolvers
 
 		public string Resolve(BusinessServiceCategory source, BusinessServiceCategoryModel destination, string destMember, ResolutionContext context)
 		{
-			var services = _businessServiceRepository.All().Where(s => s.BusinessServiceCategoryId == source.Id).Take(3).Select(s=>s.Name).ToList();
+			var services = _businessServiceRepository.All().Where(s => s.CategoryName == source.Name).Take(3).Select(s=>s.Name).ToList();
 			return $"{string.Join(", ", services) }..."; 		
 		}
 

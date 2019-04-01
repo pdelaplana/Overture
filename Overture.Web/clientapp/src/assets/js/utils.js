@@ -1,3 +1,4 @@
+
 function notify(message, duration){
   Snackbar.show({
 		text: message,
@@ -28,3 +29,8 @@ function notifyOnChange(message, callback){
 function closeNotification(){
   Snackbar.close();
 }
+
+$(function(){
+
+ 
+})

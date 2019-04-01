@@ -13,7 +13,7 @@ using Overture.Core.Repositories;
 namespace Overture.Core.Application.UseCases.ManageServices
 {
 	
-	public class UpdateBusinessService : IUseCase<Models.BusinessServiceModel>
+	public class UpdateBusinessService : UseCase<Models.BusinessServiceModel>
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

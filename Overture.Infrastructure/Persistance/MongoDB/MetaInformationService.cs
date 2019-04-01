@@ -38,6 +38,7 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 				{
 					meta.ServiceAreas = value.ServiceAreas;
 					meta.ContactMethodTypes = value.ContactMethodTypes;
+					meta.ServiceCategories = value.ServiceCategories;
 					var filter = Builders<MetaInformation>.Filter.Eq("Id", meta.Id);
 					_collection.ReplaceOne(filter, meta);
 				}

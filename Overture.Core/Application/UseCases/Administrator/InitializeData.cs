@@ -18,25 +18,30 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.Administrator
 {
-    public class InitializeData : IUseCase<InitializeDataModel>
+    public class InitializeData : UseCase<InitializeDataModel>
     {
 		public bool DeleteDataIfExists { get; set; }
 		public bool IntializeMetaInformation { get; set; }
 		public bool PopulateBusinessServices { get; set; }
+		public bool PopulateSampleBusinesses { get; set; }
 		public bool PoplateContactMethods { get; set; }
-    }
+		
+	}
 
 	public class InitializeDataHandler : IUseCaseHandler<InitializeData, InitializeDataModel>
 	{
+		public IBusinessRepository _businessRepository = null;
 		public IBusinessServiceRepository _businessServiceRepository = null;
 		public IBusinessServiceCategoryRepository _businessServiceCategoryRepository = null;
 		public IMetaInformationService _metaInformationService = null;
 
 		public InitializeDataHandler(
+			IBusinessRepository businessRepository,
 			IBusinessServiceRepository businessServiceRepository, 
 			IBusinessServiceCategoryRepository businessServiceCategoryRepository,
 			IMetaInformationService metaInformationService)
 		{
+			_businessRepository = businessRepository;
 			_businessServiceRepository = businessServiceRepository;
 			_businessServiceCategoryRepository = businessServiceCategoryRepository;
 			_metaInformationService = metaInformationService;
@@ -46,66 +51,18 @@ namespace Overture.Core.Application.UseCases.Administrator
 		{
 			try
 			{
-				var counter = 0;
-
-				if (request.PopulateBusinessServices)
-				{
-					
-					var csv = GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.business_services.csv");
-					using (var reader = new CsvReader(new StringReader(csv)))
-					{
-						while (reader.Read())
-						{
-							var record = reader.GetRecord<dynamic>();
-							await CreateBusinessService(record.Category, record.Name);
-							counter++;
-						}
-					}
-				}
-
-				if (request.IntializeMetaInformation)
-				{
-					counter = 0;
-					var serviceAreas = new List<ServiceArea>();
-					
-					using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.service_areas.csv"))))
-					{
-						while (reader.Read())
-						{
-							var record = reader.GetRecord<dynamic>();
-							serviceAreas.Add(new ServiceArea
-							{
-								Name = record.Name
-							});
-							counter++;
-						}
-					};
-
-					var contactMethods = new List<string>();
-					using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.contact_methods.csv"))))
-					{
-						while (reader.Read())
-						{
-							var record = reader.GetRecord<dynamic>();
-							contactMethods.Add(record.Name);
-							counter++;
-						}
-					}
-
-					_metaInformationService.Current = new Application.MetaInformation
-					{
-						ServiceAreas = serviceAreas,
-						ContactMethodTypes = contactMethods.ToArray()
-					}; 
-				}
-
+				InitializeMetaInformation(request);
 				return new UseCaseResult<InitializeDataModel>
 				{
 					ResultCode = "Ok",
 					ResultText = "InitializeData",
 					Data = new InitializeDataModel
 					{
-						ServicesCount = counter
+						ContactMethodsCount = _metaInformationService.Current.ContactMethodTypes.Count(),
+						ServiceCategoriesCount = _metaInformationService.Current.ServiceCategories.Count(),
+						ServiceAreasCount = _metaInformationService.Current.ServiceAreas.Count(),
+						ServicesCount = await PopulateBusinessServices(request),
+						SampleBusinessesCount = await PopulateSampleBusinesses(request)
 					}
 				};
 			}
@@ -136,31 +93,139 @@ namespace Overture.Core.Application.UseCases.Administrator
 			return result;
 		}
 
-		private async void CreateBusinessService(string categoryName, string serviceName)
+		private void InitializeMetaInformation(InitializeData request)
 		{
-			try
+			var counter = 0;
+			if (request.IntializeMetaInformation)
 			{
-				// fetch guid of service category
-				var category = _businessServiceCategoryRepository.All().Where(c => c.Name == categoryName).SingleOrDefault();
-				if (category == null)
+				var serviceAreas = new List<ServiceArea>();
+				using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.service_areas.csv"))))
 				{
-					category = _businessServiceCategoryRepository.Add(new BusinessServiceCategory { Name = categoryName });
+					while (reader.Read())
+					{
+						var record = reader.GetRecord<dynamic>();
+						serviceAreas.Add(new ServiceArea
+						{
+							Name = record.Name
+						});
+						counter++;
+					}
+				};
+
+				counter = 0;
+				var serviceCategories = new List<ServiceCategory>();
+				using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.service_categories.csv"))))
+				{
+					while (reader.Read())
+					{
+						var record = reader.GetRecord<dynamic>();
+						serviceCategories.Add(new ServiceCategory
+						{
+							Name = record.Name
+						});
+						counter++;
+					}
 				}
 
 
-				await _businessServiceRepository.AddAsync(new BusinessService
+				var contactMethods = new List<string>();
+				using (var reader = new CsvReader(new StringReader(GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.contact_methods.csv"))))
 				{
-					Name = serviceName,
-					BusinessServiceCategoryId = category.Id
-				});
+					while (reader.Read())
+					{
+						var record = reader.GetRecord<dynamic>();
+						contactMethods.Add(record.Name);
+						counter++;
+					}
+				}
 
-				
+				_metaInformationService.Current = new Application.MetaInformation
+				{
+					ServiceAreas = serviceAreas,
+					ServiceCategories = serviceCategories,
+					ContactMethodTypes = contactMethods.ToArray()
+				};
+
 			}
-			catch (Exception e)
+
+		}
+
+		private async Task<int> PopulateBusinessServices(InitializeData request)
+		{
+			var counter = 0;
+			if (request.PopulateBusinessServices)
 			{
-				throw e;
+				if (request.DeleteDataIfExists)
+				{
+					await _businessServiceRepository.DeleteAllAsync();
+				}
+				var csv = GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.business_services.csv");
+				using (var reader = new CsvReader(new StringReader(csv)))
+				{
+					while (reader.Read())
+					{
+						var record = reader.GetRecord<dynamic>();
+						await _businessServiceRepository.AddAsync(new BusinessService
+						{
+							Name = record.Name,
+							CategoryName = record.Category
+						});
+						counter++;
+					}
+				}
 			}
+			return counter;
+		}
 
+		private async Task<int> PopulateSampleBusinesses(InitializeData request)
+		{
+			var counter = 0;
+			if (request.PopulateSampleBusinesses)
+			{
+				var csv = GetEmbeddedResourceAsString("Overture.Core.Domain.InitialData.sample_businesses.csv");
+				using (var reader = new CsvReader(new StringReader(csv)))
+				{
+					while (reader.Read())
+					{
+						var record = reader.GetRecord<dynamic>();
+						var services = new List<BusinessService>();
+						foreach (var service in ((string[])record.BusinessServices.Split("|")).ToList())
+						{
+							var found = _businessServiceRepository.All().Where(s => s.Name == service).FirstOrDefault();
+							if (found != null)
+							{
+								services.Add(found);
+							}
+						}
+						var areas = new List<ServiceArea>();
+						foreach (var area in ((string[])record.ServiceAreas.Split("|")).ToList())
+						{
+							if (!string.IsNullOrEmpty(area))
+							{
+								areas.Add(new ServiceArea { Name = area });
+							}
+						}
+
+						string name = record.Name.ToString().TrimEnd(Environment.NewLine.ToCharArray());
+						await _businessRepository.AddAsync(new Business
+						{
+							Name = name,
+							AltReference = name.ToLower().Replace(" ", "-"),
+							Owner = record.Owner,
+							Tagline = record.Tagline,
+							Description = record.Description,
+							IsTrading = true,
+							Address = new Address(),
+							ContactMethods = new List<ContactMethod>(),
+							BusinessServices = services,
+							ServiceAreas = areas,
+							FileAttachments = new List<FileAttachment>()
+						});
+						counter++;
+					}
+				}
+			}
+			return counter;
 		}
 	}
 }

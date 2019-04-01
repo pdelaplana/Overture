@@ -10,18 +10,19 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.FileStore
 {
-    public class UploadFile : IUseCase<FileAttachmentModel>
+    public class UploadFile : UseCase<FileAttachmentModel>
     {
 		public string FileName { get; set; }
+		public string ContentType { get; set; }
 		public byte[] Contents { get; set; }
     }
 
-	public class UploadFileHander : IUseCaseHandler<UploadFile, FileAttachmentModel>
+	public class UploadFileHandler : IUseCaseHandler<UploadFile, FileAttachmentModel>
 	{
 		private readonly IFileStoreService _fileStoreService = null;
 		private readonly IMapper _mapper = null;
 
-		public UploadFileHander(IFileStoreService fileStoreService, IMapper mapper)
+		public UploadFileHandler(IFileStoreService fileStoreService, IMapper mapper)
 		{
 			_fileStoreService = fileStoreService;
 			_mapper = mapper;
@@ -35,7 +36,7 @@ namespace Overture.Core.Application.UseCases.FileStore
 				{
 					if (request.Contents.Length > 0)
 					{
-						return UseCaseResult<FileAttachmentModel>.Create( _mapper.Map<IFileProperties, FileAttachmentModel>(await _fileStoreService.PostAsync(request.FileName, request.Contents)));
+						return UseCaseResult<FileAttachmentModel>.Create( _mapper.Map<IFileProperties, FileAttachmentModel>(await _fileStoreService.PostAsync(request.FileName, request.Contents, request.ContentType)));
 					}
 					else
 					{

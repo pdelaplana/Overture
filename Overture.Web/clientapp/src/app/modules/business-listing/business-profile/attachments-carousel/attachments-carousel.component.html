@@ -1,0 +1,17 @@
+<div class="boxed-list margin-bottom-60" *ngIf="attachments.length > 0">
+  <div class="boxed-list-headline margin-bottom-20">
+    <h3><i class="icon-material-outline-library-books"></i> Gallery ({{attachments.length}})</h3>
+  </div>
+  <ngx-slick-carousel class="logo-carousel" 
+                      #slickModal="slick-carousel"
+                      [config]="slideConfig">
+
+    <div ngxSlickItem class="carousel-item" *ngFor="let attachment of attachments">
+      <a appMagnificPopup [src]="imageUrl+'/'+attachment.fileReference">
+        <app-picture [fileReference]="attachment.fileReference" [maxHeight]="'120px'" [maxWidth]="'120px'" ></app-picture>
+      </a>
+    </div>
+                    
+  </ngx-slick-carousel>
+</div>
+

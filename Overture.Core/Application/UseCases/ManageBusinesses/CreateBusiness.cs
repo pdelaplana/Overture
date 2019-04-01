@@ -11,7 +11,7 @@ using Overture.Core.Domain.Entities;
 
 namespace Overture.Core.Application.UseCases.ManageBusinesses
 {
-    public class CreateBusiness : IUseCase<BusinessModel>
+    public class CreateBusiness : UseCase<BusinessModel>
     {
 		public string Name { get; set; }
 		public string Owner { get; set; }

@@ -12,7 +12,7 @@ using Overture.Core.Repositories;
 namespace Overture.Core.Application.UseCases.ManageServices
 {
 	
-	public class CreateBusinessService : IUseCase<Models.BusinessServiceModel>
+	public class CreateBusinessService : UseCase<Models.BusinessServiceModel>
 	{
 		public string Name { get; set; }
 		public string CategoryName { get; set; }
@@ -34,14 +34,7 @@ namespace Overture.Core.Application.UseCases.ManageServices
 		{
 			try
 			{
-				// fetch guid of service category
-				var category = _categoryRepository.All().Where(c => c.Name == request.CategoryName).SingleOrDefault();
-				if (category == null)
-				{
-					category = _categoryRepository.Add(new BusinessServiceCategory { Name = request.CategoryName });
-				}
-
-
+				
 				return new UseCaseResult<Models.BusinessServiceModel>
 				{
 					ResultCode = "Ok",
@@ -49,7 +42,7 @@ namespace Overture.Core.Application.UseCases.ManageServices
 					Data = _mapper.Map<Models.BusinessServiceModel>(await _repository.AddAsync(new Domain.Entities.BusinessService
 					{
 						Name = request.Name,
-						BusinessServiceCategoryId = category.Id
+						CategoryName= request.CategoryName
 					}))
 				};
 			}

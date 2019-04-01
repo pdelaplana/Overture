@@ -1,0 +1,7 @@
+<!-- Upload Button -->
+<div class="uploadButton margin-top-0">
+  <input  #inputFile class="uploadButton-input" type="file" accept="image/*, application/pdf" multiple ng2FileSelect [uploader]="uploader" (change)="onFileChange()" />
+  <label class="uploadButton-button ripple-effect" for="upload" (click)="inputFile.click()" >Upload Files</label>
+  <span class="uploadButton-file-name">Maximum file size: 10 MB</span>    
+</div>
+  

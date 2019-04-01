@@ -31,7 +31,6 @@ namespace Overture.Web.API.Controllers
 		[Authorize]
 		public async Task<ActionResult<UseCaseResult<FileAttachmentModel>>> UploadFile(IFormFile file)
 		{
-			
 			try
 			{
 				if (file.Length > 0)
@@ -39,7 +38,7 @@ namespace Overture.Web.API.Controllers
 					using (var ms = new MemoryStream())
 					{
 						file.CopyTo(ms);
-						return Ok(await UseCase.Execute(new UploadFile { FileName = file.FileName, Contents = ms.ToArray() }));
+						return Ok(await UseCase.Execute(new UploadFile { FileName = file.FileName, Contents = ms.ToArray(), ContentType = file.ContentType }));
 
 					}
 				}
@@ -48,10 +47,48 @@ namespace Overture.Web.API.Controllers
 					return StatusCode(StatusCodes.Status204NoContent, "Empty file");
 				}
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				return StatusCode(StatusCodes.Status500InternalServerError, "Upload Failed: " + ex.Message);
+				return StatusCode(StatusCodes.Status500InternalServerError, "Upload Failed: " + e.Message);
 			}
 		}
+
+		[HttpDelete]
+		[Authorize]
+		[Route("{fileReference}")]
+		public async Task<ActionResult<UseCaseResult<bool>>> Delete(string fileReference)
+		{
+			try
+			{
+				return Ok(await UseCase.Execute(new DeleteFile { FileReference = fileReference }));
+			
+			}
+			catch (Exception e)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError, "Delete Failed: " + e.Message);
+			}
+		}
+
+		[HttpGet]
+		[Route("{fileReference}")]
+		public async Task<ActionResult> Get(string fileReference)
+		{
+			try
+			{
+				var result = await UseCase.Execute(new DownloadFile { FileReference = fileReference });
+				var content = result.Data.Contents;
+				var contentType = result.Data.ContentType;
+
+				//return File(new MemoryStream(content), "application/octet-stream"); // returns a FileStreamResult
+				return File(new MemoryStream(content), contentType ?? "application/octet-stream"); // returns a FileStreamResult
+
+			}
+			catch (Exception e)
+			{
+				return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+
 	}
 }

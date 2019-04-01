@@ -19,8 +19,7 @@ namespace Overture.Core.Application.AutoMapper.Profiles
 			CreateMap<Business, BusinessModel>();
 			CreateMap<FileAttachment, FileAttachmentModel>();
 			CreateMap<IFileProperties, FileAttachmentModel>();
-			CreateMap<BusinessService, BusinessServiceModel>()
-				.ForMember(dest => dest.CategoryName, opts => opts.MapFrom<BusinessServiceCategoryNameResolver, Guid>(src => src.BusinessServiceCategoryId));
+			CreateMap<BusinessService, BusinessServiceModel>();
 			CreateMap<BusinessServiceCategory, BusinessServiceCategoryModel>()
 				.ForMember(dest => dest.Description, opts => opts.MapFrom<BusinessServiceCategoryDescriptionResolver>())
 				.ForMember(dest => dest.CountOfServices, opts => opts.MapFrom<CountOfServicesResolver>());

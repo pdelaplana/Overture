@@ -1,7 +1,7 @@
 Category,Name
-Cleaning,Home
-Cleaning,Office
-Cleaning,End of Lease
+Cleaning,Home Cleaning
+Cleaning,Office Cleaning
+Cleaning,End of Lease Cleaning
 Cleaning,Windows and Exteriors
 Cleaning,Curtains and Furnishings
 Cleaning,Carpet Cleaning
@@ -10,13 +10,14 @@ Cleaning,Recycling
 Laundry,Wash and Fold
 Laundry,Dry Clean
 Laundry,Ironing
-Laundry ,Pickup and Deliver
-Launrdy,Curtains and Draperies
-Laindry,Self Serve Laundromat
+Laundry,Pickup and Deliver
+Laundry,Curtains and Draperies
+Laundry,Self Serve Laundromat
 Gardening and Lawn Care,Gardeners
 Gardening and Lawn Care,Landscapers
 Gardening and Lawn Care,Lawn Mowing
 Gardening and Lawn Care,Yard and Garden Work
+Events,Wedding Planners
 Events,Event Planners
 Events,Caterers
 Events,DJ
@@ -26,9 +27,11 @@ Events,Bridal Stylists
 Events,Karaoke Rentals
 Events,Photobooth Rentals
 Events,Makeup Artists
+Events,Limo Service
 Plumbing,Drain Cleaning
 Plumbing,"Faucets, Fixtures, and Pipes"
 Plumbing,Septic Tanks
+Home Improvement and Renovations,Handyman Services
 Home Improvement and Renovations,Interior Designers
 Home Improvement and Renovations,Landscapers
 Home Improvement and Renovations,Architects
@@ -38,10 +41,12 @@ Home Improvement and Renovations,Bathroom Contractors
 Child Care,Babysitters
 Child Care,Day Care
 Child Care,Vacation Care
-Video and Photography,Weddings
-Video and Photography,Events
-Video and Photography,Product 
-Video and Photography,Arial/Drone Phtography
+Video and Photography,Weddings Video
+Video and Photography,Weddings Photography
+Video and Photography,Events Video
+Video and Photography,Events Photography
+Video and Photography,Product Photography
+Video and Photography,Arial/Drone Photography
 Tailoring,Dressmaking
 Tailoring,Alterations
 Tailoring,Formal Attire

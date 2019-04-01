@@ -9,6 +9,8 @@ namespace Overture.Core.Application
     {
 		public Guid Id { get; set; }
 		public IEnumerable<ServiceArea> ServiceAreas { get; set; }
+		public IEnumerable<ServiceCategory> ServiceCategories { get; set; }
+
 		public string[] ContactMethodTypes { get; set; }
     }
 }

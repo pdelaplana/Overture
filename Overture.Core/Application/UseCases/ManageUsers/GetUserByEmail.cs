@@ -7,7 +7,7 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.ManageUsers
 {
-    public class GetUserByEmail : IUseCase<OvertureUser>
+    public class GetUserByEmail : UseCase<OvertureUser>
     {
 		public string Email { get; set; }
     }

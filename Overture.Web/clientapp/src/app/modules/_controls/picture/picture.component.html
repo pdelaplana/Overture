@@ -1,0 +1,5 @@
+<div>
+  <img class="profile-pic" [src]="picture" *ngIf="hasPicture" [style.maxHeight]="maxHeight" [style.maxWidth]="maxWidth" />
+  <img class="profile-pic" src="assets/images/company-logo-placeholder.png" alt="" *ngIf="!hasPicture" />
+
+</div>

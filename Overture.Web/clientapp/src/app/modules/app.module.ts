@@ -1,3 +1,5 @@
+import { BusinessListingModule } from './business-listing/business-listing.module';
+import { BusinessListingRoutingModule } from './business-listing/business-listing-routing.module';
 import { JwtInterceptor } from './../_interceptors/jwt.interceptor';
 import { HomeModule } from './home/home.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,13 +10,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentModule } from 'ngx-moment';
 import { HttpErrorInterceptor } from '../_interceptors/http-error.interceptor';
 
+import { ControlsModule } from './_controls/controls.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { ManagementRoutingModule } from './management/management-routing.module';
 import { ManagementModule } from './management/management.module';
-import { ControlsModule } from './controls/controls.module';
 import { SignInComponent } from './sign-in/sign-in.component';
 
 
@@ -22,8 +24,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
   declarations: [
     AppComponent,
     RegisterComponent,
-    SignInComponent,
-    
+    SignInComponent,    
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BusinessListingModule,
+    BusinessListingRoutingModule
   ],
   exports: [
     

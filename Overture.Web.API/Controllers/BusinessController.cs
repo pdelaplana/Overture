@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,7 @@ namespace Overture.Web.API.Controllers
 		[Authorize]
 		public async Task<ActionResult<UseCaseResult<BusinessModel>>> Put([FromBody]UpdateBusiness request)
 		{
+			
 			return Ok(await UseCase.Execute(request));
 		}
 

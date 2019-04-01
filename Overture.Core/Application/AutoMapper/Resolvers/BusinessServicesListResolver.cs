@@ -23,7 +23,7 @@ namespace Overture.Core.Application.AutoMapper.Resolvers
 		
 		public IEnumerable<BusinessServiceModel> Resolve(BusinessServiceCategory source, BusinessServiceCategoryModel destination, IEnumerable<BusinessServiceModel> destMember, ResolutionContext context)
 		{
-			return _mapper.Map<IEnumerable<BusinessServiceModel>>(_businessServiceRepository.All().Where(s => s.BusinessServiceCategoryId == source.Id).ToList());
+			return _mapper.Map<IEnumerable<BusinessServiceModel>>(_businessServiceRepository.All().Where(s => s.CategoryName == source.Name).ToList());
 		}
 	}
 }

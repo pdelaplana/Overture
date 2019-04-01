@@ -1,3 +1,6 @@
+import { MagnificPopupDirective } from './../../_directives/magnific-popup.directive';
+import { PictureComponent } from './picture/picture.component';
+import { BootstrapSelectDirective } from './../../_directives/bootstrap-select.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,6 +14,9 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ManagementRoutingModule } from '@app/modules/management/management-routing.module';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { TippyTooltipsDirective } from '@app/_directives/tippy-tooltips.directive';
+import { AttachmentsCarouselDirective } from '@app/_directives/attachments-carousel.directive';
+import { ReplacePipe } from '@app/_helpers/replace.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,13 @@ import { RegistrationFormComponent } from './registration-form/registration-form
     HeaderMessagesComponent,
     HeaderNotificationsComponent,
     HeaderUserMenuComponent,
-    RegistrationFormComponent,    
+    RegistrationFormComponent,  
+    PictureComponent,
+    ReplacePipe,
+    BootstrapSelectDirective,
+    TippyTooltipsDirective,
+    AttachmentsCarouselDirective  ,
+    MagnificPopupDirective
   ],
   imports: [
     CommonModule,
@@ -34,7 +46,13 @@ import { RegistrationFormComponent } from './registration-form/registration-form
     HeaderComponent,
     FooterComponent,
     BackgroundImageComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
+    PictureComponent,
+    ReplacePipe,
+    BootstrapSelectDirective,
+    TippyTooltipsDirective,
+    AttachmentsCarouselDirective,
+    MagnificPopupDirective
   ]
 })
 export class ControlsModule { }

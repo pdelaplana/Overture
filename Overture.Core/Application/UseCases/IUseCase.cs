@@ -5,5 +5,8 @@ using MediatR;
 
 namespace Overture.Core.Application.UseCases
 {
-	public interface IUseCase<TModel> : IRequest<UseCaseResult<TModel>> { }
+	public interface IUseCase<TModel> : IRequest<UseCaseResult<TModel>>
+	{
+		UseCaseContext Context { get; set; }
+	}
 }

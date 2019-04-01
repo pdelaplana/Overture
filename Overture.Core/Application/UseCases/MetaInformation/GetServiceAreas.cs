@@ -8,7 +8,7 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.MetaInformation
 {
-    public class GetServiceAreas : IUseCase<IEnumerable<ServiceArea>>
+    public class GetServiceAreas : UseCase<IEnumerable<ServiceArea>>
     {
     }
 

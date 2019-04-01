@@ -61,12 +61,13 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 
 		public void DeleteAll()
 		{
-			throw new NotImplementedException();
+			_collection.DeleteMany(Builders<TEntity>.Filter.Empty);
+			
 		}
 
-		public Task DeleteAllAsync()
+		public async Task DeleteAllAsync()
 		{
-			throw new NotImplementedException();
+			await _collection.DeleteManyAsync(Builders<TEntity>.Filter.Empty);
 		}
 
 		public Task DeleteAsync(Expression<Func<TEntity, bool>> expression)

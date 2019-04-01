@@ -9,6 +9,7 @@ namespace Overture.Core.Domain.ValueObjects
 		public string FileReference { get; set; }
 		public string FileName { get; set; }
 		public string FileType { get; set; }
+		public string ContentType { get; set; }
 		public int FileSize { get; set;  }
     }
 }

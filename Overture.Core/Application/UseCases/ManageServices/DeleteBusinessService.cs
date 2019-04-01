@@ -12,7 +12,7 @@ using Overture.Core.Repositories;
 namespace Overture.Core.Application.UseCases.ManageServices
 {
 	
-	public class DeleteBusinessService : IUseCase<Boolean>
+	public class DeleteBusinessService : UseCase<Boolean>
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

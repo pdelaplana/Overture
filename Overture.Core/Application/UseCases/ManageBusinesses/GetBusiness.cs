@@ -10,10 +10,13 @@ using Overture.Core.Repositories;
 
 namespace Overture.Core.Application.UseCases.ManageBusinesses
 {
-    public class GetBusiness : IUseCase<BusinessModel>
+    public class GetBusiness : UseCase<BusinessModel>
     {
 		public string UserId { get; set; }
-    }
+		public string Name { get; set; }
+		public string AltReference { get; set; }
+
+	}
 
 	public class GetBusinessHandler : IUseCaseHandler<GetBusiness, BusinessModel>
 	{
@@ -31,17 +34,30 @@ namespace Overture.Core.Application.UseCases.ManageBusinesses
 
 			try
 			{
-				if (!string.IsNullOrEmpty(request.UserId))
+				var query = _businessRepository.All();
+				if (!string.IsNullOrEmpty(request.Name))
 				{
-					return await Task.Run(() =>
-					{
-						return UseCaseResult<BusinessModel>.Create(_mapper.Map<BusinessModel>(_businessRepository.All().Where(b => b.UserId == request.UserId).SingleOrDefault()), resultText: "GetBusiness");
-					});
+					query = query.Where(b => b.Name == request.Name);
+				}
+				else if (!string.IsNullOrEmpty(request.AltReference))
+				{
+
+					query = query.Where(b => b.AltReference == request.AltReference);
+				}
+				else if (!string.IsNullOrEmpty(request.UserId))
+				{
+
+					query = query.Where(b => b.UserId == request.UserId);
 				}
 				else
 				{
 					return UseCaseResult<BusinessModel>.CreateError(resultText: "No User Id");
 				}
+
+				return await Task.Run(() =>
+				{
+					return UseCaseResult<BusinessModel>.Create(_mapper.Map<BusinessModel>(query.SingleOrDefault()), resultText: "GetBusiness");
+				});
 			}
 			catch (Exception e)
 			{

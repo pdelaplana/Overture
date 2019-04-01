@@ -1,0 +1,122 @@
+<div class="notify-box margin-top-15">
+  <div class="switch-container">
+    <label class="switch"><input type="checkbox"><span class="switch-button"></span><span class="switch-text">Turn on email alerts for this search</span></label>
+  </div>
+
+  <div class="sort-by">
+    <span>Sort by:</span>
+    <select appBootstrapSelect class="hide-tick">
+      <option>Relevance</option>
+      <option>Newest</option>
+      <option>Oldest</option>
+      <option>Random</option>
+    </select>
+  </div>
+</div>
+
+
+  <!-- Business List Container -->
+  <div class="freelancers-container freelancers-list-layout margin-top-35">
+				
+    <!--Business -->
+    <div class="freelancer" *ngFor="let business of data | paginate: paginationConfig ">
+
+      <!-- Overview -->
+      <div class="freelancer-overview">
+        <div class="freelancer-overview-inner">
+          
+          <!-- Bookmark Icon -->
+          <span class="bookmark-icon"></span>
+          
+          <!-- Avatar -->
+          <div class="freelancer-avatar">
+            <div class="verified-badge"></div>
+            <a [routerLink]="['profile', business.altReference ]"><app-picture [fileReference]="business.picture ? business.picture.fileReference: null"></app-picture></a>
+          </div>
+
+          <!-- Name -->
+          <div class="freelancer-name">
+            <h4><a [routerLink]="['profile', business.altReference ]">{{business.name}} <img class="flag" src="images/flags/gb.svg" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
+            <span>{{business.tagline}}</span>
+            <!-- Rating -->
+            <div class="freelancer-rating">
+              <div class="star-rating" data-rating="4.9"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Details -->
+      <div class="freelancer-details">
+        <div class="freelancer-details-list">
+          <ul>
+            <li>Location <strong><i class="icon-material-outline-location-on"></i> London</strong></li>
+            <li>Rate <strong>$60 / hr</strong></li>
+            <li>Job Success <strong>95%</strong></li>
+          </ul>
+        </div>
+        <a [routerLink]="['profile', business.altReference ]" class="button button-sliding-icon ripple-effect">View Profile <i class="icon-material-outline-arrow-right-alt"></i></a>
+      </div>
+    </div>
+    <!-- Business / End -->
+
+  </div>
+  <!-- Business List Container / End -->
+
+
+  <!-- Pagination -->
+  <div class="clearfix"></div>
+  <div class="row" *ngIf="data.length>0">
+    <div class="col-md-12">
+      <!-- Pagination -->
+      <pagination-template #p="paginationApi"
+                          [id]="paginationConfig.id"
+                          (pageChange)="pageChange($event)">
+        <div class="pagination-container margin-top-40 margin-bottom-60">
+          <nav class="pagination">
+            <ul>
+              <li class="pagination-arrow" [class.disabled]="p.isFirstPage()">
+                <a *ngIf="!p.isFirstPage()" (click)="p.previous()" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-left"></i></a>
+              </li>
+              <li *ngFor="let page of p.pages" >
+                <a class="ripple-effect" [class.current-page]="p.getCurrent() === page.value" (click)="p.setCurrent(page.value)">{{ page.label }}</a>
+              </li>
+              <li class="pagination-arrow" [class.disabled]="p.isLastPage()">
+                <a  *ngIf="!p.isLastPage()" (click)="p.next()" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </pagination-template>
+    </div>
+  </div>
+  <!-- Pagination / End -->
+
+  <div class="row" *ngIf="data.length==0 && hasSearchRan">
+		<div class="col-xl-12">
+
+			<section id="not-found" class="center margin-top-50 margin-bottom-25">
+				<h2> <i class="icon-line-awesome-question-circle"></i></h2>
+        <p>We're sorry, but we couldn't find any businesses for the filters you have selected. </p>
+        <p>Try adding or removing filters to refresh your search.</p>
+			</section>
+
+		</div>
+	</div>
+
+
+  <div class="row" *ngIf="!hasSearchRan">
+		<div class="col-xl-12">
+
+			<section id="not-found" class="center margin-top-50 margin-bottom-25">
+				<h2>  <i class="icon-line-awesome-question-circle"></i></h2>
+        <p>Hello there!! </p>
+        <p>To get started, select some filters or click the button below to run a search. </p>
+        <button class="button ripple-effect center" (click)="executeSearch()">Search</button>
+			</section>
+		</div>
+	</div>
+
+
+
+ 

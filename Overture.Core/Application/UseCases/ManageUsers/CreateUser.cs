@@ -9,7 +9,7 @@ using Overture.Core.Domain.Entities;
 
 namespace Overture.Core.Application.UseCases.ManageUsers
 {
-    public class CreateUser : IUseCase<OvertureUser>
+    public class CreateUser : UseCase<OvertureUser>
 	{
 		public string Email { get; set; }
 		public string Password { get; set; }

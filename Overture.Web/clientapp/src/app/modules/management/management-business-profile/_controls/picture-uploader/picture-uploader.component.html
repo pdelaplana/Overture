@@ -1,0 +1,6 @@
+<div class="avatar-wrapper " appTippyTooltips data-tippy-placement="bottom" title="Change Profile Picture" (click)="inputFile.click()">
+  <img class="profile-pic" [src]="picture" *ngIf="hasPicture" />
+  <img class="profile-pic" src="assets/images/company-logo-placeholder.png" alt="" *ngIf="!hasPicture" />
+  <div class="upload-button"></div>
+  <input #inputFile class="file-upload" type="file" accept="image/*" ng2FileSelect [uploader]="uploader" (change)="onFileChange()" />
+</div>

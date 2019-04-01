@@ -1,35 +1,29 @@
 <!-- Category Boxes -->
 <div class="section margin-top-65 padding-bottom-75">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-12">
-  
-          <div class="section-headline centered margin-bottom-15">
-            <h3>Most Requested Services</h3>
-          </div>
-  
-          <!-- Category Boxes Container -->
-          <div class="categories-container">
-  
-            <!-- Category Box -->
-            <a *ngFor="let category of categories" href="jobs-grid-layout-full-page.html" class="category-box">
-              <div class="category-box-icon">
-                <i class="icon-line-awesome-file-code-o"></i>
-              </div>
-              <div class="category-box-counter">{{category.countOfServices}}</div>
-              <div class="category-box-content">
-                <h3>{{category.name}}</h3>
-                <p>{{category.description}}</p>
-              </div>
-            </a>
-  
-          
-          </div>
-  
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="section-headline centered margin-bottom-15">
+          <h3>Most Requested Services</h3>
+        </div>
+        <!-- Category Boxes Container -->
+        <div class="categories-container">
+          <!-- Category Box -->
+          <a *ngFor="let category of categories"  class="category-box" (click)="openBusinessListing(category.name)" >
+            <div class="category-box-icon">
+              <i class="icon-line-awesome-file-code-o"></i>
+            </div>
+            <div class="category-box-counter">{{category.countOfServices}}</div>
+            <div class="category-box-content">
+              <h3>{{category.name}}</h3>
+              <p>{{category.description}}</p>
+            </div>
+          </a>  
         </div>
       </div>
     </div>
   </div>
-  <!-- Category Boxes / End -->
+</div>
+<!-- Category Boxes / End -->
 
 

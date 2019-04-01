@@ -7,7 +7,7 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.ManageUsers
 {
-    public class AuthenticateUser : IUseCase<OvertureUser>
+    public class AuthenticateUser : UseCase<OvertureUser>
     {
 		public string Email { get; set; }
 		public string Password { get; set; }
