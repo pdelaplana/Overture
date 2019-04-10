@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,7 +54,8 @@ namespace Overture.Core.Application.UseCases.ManageBusinesses
 					business.UserId = request.Context.UserId;
 				}
 				business.Name = request.Name;
-				business.AltReference = request.Name.ToLower().Replace(" ", "-");
+				//business.AltReference = request.Name.ToLower()..Replace(" ", "-");
+				business.AltReference = Regex.Replace(request.Name.ToLower(), @"[^A-Za-z0-9_\.~]+", "-");
 				business.Owner = request.Owner;
 				business.Tagline = request.Tagline;
 				business.Description = request.Description;

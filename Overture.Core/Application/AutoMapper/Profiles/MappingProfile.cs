@@ -24,6 +24,10 @@ namespace Overture.Core.Application.AutoMapper.Profiles
 				.ForMember(dest => dest.Description, opts => opts.MapFrom<BusinessServiceCategoryDescriptionResolver>())
 				.ForMember(dest => dest.CountOfServices, opts => opts.MapFrom<CountOfServicesResolver>());
 
+			CreateMap<Review, ReviewModel>()
+				.ForMember(dest => dest.ReviewerName, opts => opts.MapFrom<UserDisplayNameResolver, string>(src => src.Reviewer))
+				.ForMember(dest => dest.BusinessName, opts => opts.MapFrom<BusinessNameResolver, Guid>(src=> src.BusinessId));
+
 		}
 	}
 }

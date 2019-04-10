@@ -15,6 +15,7 @@ import { SearchResultsComponent } from './business-listing-home/search-results/s
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
 import { BusinessReviewsListComponent } from './business-profile/business-reviews-list/business-reviews-list.component';
 import { AttachmentsCarouselComponent } from './business-profile/attachments-carousel/attachments-carousel.component';
+import { AddReviewDialogComponent } from './business-profile/add-review-dialog/add-review-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AttachmentsCarouselComponent } from './business-profile/attachments-car
     SearchResultsComponent,
     BusinessProfileComponent,
     BusinessReviewsListComponent,
-    AttachmentsCarouselComponent
+    AttachmentsCarouselComponent,
+    AddReviewDialogComponent
   ],
   imports: [
     CommonModule,

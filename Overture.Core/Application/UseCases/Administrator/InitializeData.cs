@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
@@ -15,6 +16,7 @@ using Overture.Core.Domain.Entities;
 using Overture.Core.Domain.ValueObjects;
 using Overture.Core.Repositories;
 using Overture.Core.Services;
+
 
 namespace Overture.Core.Application.UseCases.Administrator
 {
@@ -210,7 +212,8 @@ namespace Overture.Core.Application.UseCases.Administrator
 						await _businessRepository.AddAsync(new Business
 						{
 							Name = name,
-							AltReference = name.ToLower().Replace(" ", "-"),
+							//AltReference = name.ToLower().Replace(" ", "-"),
+							AltReference = Regex.Replace(name.ToLower(), @"[^A-Za-z0-9_\.~]+", "-"),
 							Owner = record.Owner,
 							Tagline = record.Tagline,
 							Description = record.Description,

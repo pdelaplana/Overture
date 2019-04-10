@@ -94,6 +94,8 @@ namespace Overture.Web.API
 			services.AddScoped<IBusinessServiceRepository, BusinessServiceRepository>();
 			services.AddScoped<IBusinessServiceCategoryRepository, BusinessServiceCategoryRepository>();
 			services.AddScoped<IBusinessRepository, BusinessRepository>();
+			services.AddScoped<IReviewRepository, ReviewRepository>();
+
 			services.AddScoped<IFileStoreService, FileStoreService>();
 			services.AddScoped<IUserService, Auth0UserService>();
 			services.AddScoped<IAuthenticationService, Auth0AuthenticationService>();

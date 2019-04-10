@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <StartupObject>Overture.Web.API.Program</StartupObject>
+    <UserSecretsId>c5e3c25b-4e93-43eb-ad45-e18b01ebc44e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

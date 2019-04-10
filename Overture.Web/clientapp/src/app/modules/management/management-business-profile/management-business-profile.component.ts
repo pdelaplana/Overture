@@ -1,3 +1,4 @@
+import { AddReviewDialogComponent } from './../../business-listing/business-profile/add-review-dialog/add-review-dialog.component';
 import { ReferenceDataService } from '@app/_services/reference-data.service';
 import { FileStoreService } from './../../../_services/file-store.service';
 import { FileAttachment } from './../../../_models/file-attachment';
@@ -7,7 +8,7 @@ import { Business } from '@app/_models/business';
 import { BusinessService } from '@app/_models/business-service';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { BusinessProfileService } from '@app/_services/business-profile.service';
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ContactMethod } from '@app/_models/contact-method';
 import { Address } from '@app/_models/address';
 import { ServiceArea } from '@app/_models/service-area';
@@ -33,7 +34,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     serviceAreas: ServiceArea[]
   } = { businessServices: [], serviceAreas: [] } 
   
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,

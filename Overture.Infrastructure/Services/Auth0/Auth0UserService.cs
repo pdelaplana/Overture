@@ -40,7 +40,7 @@ namespace Overture.Infrastructure.Services.Auth0
 				UserId = user.UserId,
 				Email = user.Email,
 				Name = user.UserName,
-				DisplayName = user.FullName
+				DisplayName = user.NickName
 			};
 		}
 
@@ -57,7 +57,10 @@ namespace Overture.Infrastructure.Services.Auth0
 				Email = user.Email,
 				EmailVerified = true,
 				Password = password,
-				UserMetadata = new { registeredAsBusiness = user.RegisteredAsBusiness }, 
+				UserMetadata = new {
+					displayName = user.DisplayName,
+					registeredAsBusiness = user.RegisteredAsBusiness
+				}, 
 			});
 			return MapUser(auth0User);
 			
@@ -69,6 +72,24 @@ namespace Overture.Infrastructure.Services.Auth0
 			return MapUser(users.FirstOrDefault());
 		}
 
-		
+		public async Task<OvertureUser> GetUserAsync(string id)
+		{
+			var user = await _client.Users.GetAsync(id);
+			return MapUser(user);
+		}
+
+		public async Task<OvertureUser> UpdateUserAsync(OvertureUser user)
+		{
+			var updated = await _client.Users.UpdateAsync(user.UserId, new UserUpdateRequest {
+				 
+				UserMetadata = new
+				{
+					displayName = user.DisplayName, 
+					registeredAsBusiness = user.RegisteredAsBusiness,
+
+				}
+			});
+			return MapUser(updated);
+		}
 	}
 }

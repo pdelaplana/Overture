@@ -62,6 +62,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public get isUserAuthenticated():boolean{
+    return this.currentUserSubject.value != null
+  }
+
   /*
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {

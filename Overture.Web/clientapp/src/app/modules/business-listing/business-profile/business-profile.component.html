@@ -42,7 +42,7 @@
   
       <app-attachments-carousel [attachments]="business.fileAttachments"></app-attachments-carousel>
 
-      <app-business-reviews-list></app-business-reviews-list>	
+      <app-business-reviews-list [businessId]="business.id" (onAddReview)="openReviewDialog()"></app-business-reviews-list>	
 		</div>
 		
 
@@ -52,9 +52,9 @@
 				
 				<!-- Profile Overview -->
 				<div class="profile-overview">
-					<div class="overview-item"><strong>$35</strong><span>Hourly Rate</span></div>
 					<div class="overview-item"><strong>53</strong><span>Jobs Done</span></div>
-					<div class="overview-item"><strong>22</strong><span>Rehired</span></div>
+          <div class="overview-item"><strong>22</strong><span>Quotes Sent</span></div>
+          <div class="overview-item"><strong>95%</strong><span>Hire Rate</span></div>
 				</div>
 
 				<!-- Button -->
@@ -175,3 +175,4 @@
 	</div>
 </div>
 
+<app-add-review-dialog #addReviewDialog [businessId]="business.id" ></app-add-review-dialog>

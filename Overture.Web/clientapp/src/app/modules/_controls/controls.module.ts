@@ -1,3 +1,4 @@
+import { MagnificPopupDialogDirective } from './../../_directives/magnific-popup-dialog.directive';
 import { MagnificPopupDirective } from './../../_directives/magnific-popup.directive';
 import { PictureComponent } from './picture/picture.component';
 import { BootstrapSelectDirective } from './../../_directives/bootstrap-select.directive';
@@ -17,6 +18,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { TippyTooltipsDirective } from '@app/_directives/tippy-tooltips.directive';
 import { AttachmentsCarouselDirective } from '@app/_directives/attachments-carousel.directive';
 import { ReplacePipe } from '@app/_helpers/replace.pipe';
+import { StarRatingDirective } from '@app/_directives/star-rating.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ReplacePipe } from '@app/_helpers/replace.pipe';
     BootstrapSelectDirective,
     TippyTooltipsDirective,
     AttachmentsCarouselDirective  ,
-    MagnificPopupDirective
+    MagnificPopupDirective,
+    MagnificPopupDialogDirective,
+    StarRatingDirective
   ],
   imports: [
     CommonModule,
@@ -52,7 +56,9 @@ import { ReplacePipe } from '@app/_helpers/replace.pipe';
     BootstrapSelectDirective,
     TippyTooltipsDirective,
     AttachmentsCarouselDirective,
-    MagnificPopupDirective
+    MagnificPopupDirective,
+    MagnificPopupDialogDirective,
+    StarRatingDirective
   ]
 })
 export class ControlsModule { }
