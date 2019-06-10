@@ -1,4 +1,5 @@
-import { FileAttachment } from './file-attachment';
+import { BusinessRatings } from './business-ratings';
+import { StoredFile } from '@app/_models/stored-file';
 import { Address } from './address';
 import { ServiceArea } from './service-area';
 import { BusinessService } from './business-service';
@@ -11,10 +12,14 @@ export class Business {
   tagline: string;
   description: string;
   isTrading: boolean;
-  picture: FileAttachment;
+  picture: StoredFile;
   address: Address;
   serviceAreas: ServiceArea[];
   businessServices: BusinessService[];
   contactMethods: ContactMethod[];
-  fileAttachments: FileAttachment[];
+  storedFiles:StoredFile[];
+  ratings:BusinessRatings;
+  constructor(){
+    this.ratings = new BusinessRatings();
+  }
 }

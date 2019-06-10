@@ -1,15 +1,15 @@
 <!-- Form -->
 <form [formGroup]="registrationForm"  novalidate>
     <!-- Account Type -->
-  <div class="account-type" *ngIf="accountType==''">
+  <div class="account-type" *ngIf="selectedAccountType==''">
     <div>
-      <input type="radio"  id="freelancer-radio" formControlName="registerType" name="registerType" [value]="personal" [checked]="f.registerType.value == 'personal'"  class="account-type-radio" >
-      <label for="freelancer-radio" class="ripple-effect-dark" (click)="setAccountType('personal')"><i class="icon-material-outline-account-circle"></i> I'm looking for help</label>
+      <input type="radio"  id="freelancer-radio" formControlName="accountType" name="accountType" [value]="Personal" [checked]="accountType.value == 'Personal'"  class="account-type-radio" >
+      <label for="freelancer-radio" class="ripple-effect-dark" (click)="setAccountType('Personal')"><i class="icon-material-outline-account-circle"></i> I'm looking for help</label>
     </div>
 
     <div>
-      <input type="radio"  id="employer-radio" formControlName="registerType" name="registerType" [value]="business" [checked]="f.registerType.value == 'business'"  class="account-type-radio" >
-      <label for="employer-radio" class="ripple-effect-dark" (click)="setAccountType('business')"><i class="icon-material-outline-business-center"></i> I can help</label>
+      <input type="radio"  id="employer-radio" formControlName="accountType" name="accountType" [value]="Business" [checked]="accountType.value == 'Business'"  class="account-type-radio" >
+      <label for="employer-radio" class="ripple-effect-dark" (click)="setAccountType('Business')"><i class="icon-material-outline-business-center"></i> I can help</label>
     </div>
   </div>
 

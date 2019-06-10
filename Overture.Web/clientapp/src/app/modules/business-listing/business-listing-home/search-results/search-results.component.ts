@@ -15,8 +15,6 @@ export class SearchResultsComponent implements OnInit {
   @Input() hasSearchRan: boolean = false;
 
   @Output() onExecuteSearch = new EventEmitter();
-
-  
   
   p: number = 1;
 

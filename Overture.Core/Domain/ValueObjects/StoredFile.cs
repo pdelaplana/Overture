@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Overture.Core.Domain.ValueObjects
 {
-    public class FileAttachment
+    public class StoredFile
     {
 		public string FileReference { get; set; }
 		public string FileName { get; set; }

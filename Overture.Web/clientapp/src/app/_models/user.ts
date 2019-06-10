@@ -1,8 +1,11 @@
+import { StoredFile } from './stored-file';
+
 export class User {
   userId:string;
   name:string;
   email:string;
-  loggedInAsBusiness:boolean;
+  picture:StoredFile;
+  accountType:string;
   accessToken: string;
   idToken: string;
   expiresAt:number;

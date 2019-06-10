@@ -21,5 +21,13 @@ namespace Overture.Web.API.Controllers
 			return Ok(await UseCase.Execute(request));
 
 		}
+
+		// PUT api/users
+		[HttpPut]
+		public async Task<ActionResult<UseCaseResult<OvertureUser>>> Put([FromBody]UpdateUser request)
+		{
+			return Ok(await UseCase.Execute(request));
+		}
+	
 	}
 }

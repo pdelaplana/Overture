@@ -11,5 +11,6 @@ namespace Overture.Core.Services
 		Task<OvertureUser> UpdateUserAsync(OvertureUser user);
 		Task<OvertureUser> GetUserByEmailAsync(string email);
 		Task<OvertureUser> GetUserAsync(string id);
+		Task<bool> ResetPasswordAsync(string id);
     }
 }

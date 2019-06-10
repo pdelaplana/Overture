@@ -22,8 +22,12 @@ export class ManagementSidebarComponent implements OnInit {
   ngOnInit() {
   }
 
-  notifyTest(){
-    this.notificationService.success("This is a test.")
+  
+  public get accountType() : string {
+    let user = this.authenticationService.currentUserValue;
+    return user.accountType; 
   }
+  
+ 
 
 }

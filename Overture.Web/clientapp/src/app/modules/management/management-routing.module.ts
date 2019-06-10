@@ -1,3 +1,4 @@
+import { ManagementJobListingComponent } from './management-job-listing/management-job-listing.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -15,6 +16,9 @@ const managementRoutes: Routes = [
       },
       {
         path:'business-profile', component:ManagementBusinessProfileComponent, canDeactivate:[ConfirmDeactivateGuard]
+      },
+      {
+        path:'jobs', component:ManagementJobListingComponent
       },
       {
         path:'account', component:ManagementAccountSettingsComponent

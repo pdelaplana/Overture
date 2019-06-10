@@ -1,4 +1,4 @@
-export class FileAttachment {
+export class StoredFile {
   fileReference: string;
   fileName: string;
   fileType: string;

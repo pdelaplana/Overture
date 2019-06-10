@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     let user = this.authenticationService.currentUserValue; 
     if (user){
-      this.loggedInAsBusinessOwner=user.loggedInAsBusiness;
+      this.loggedInAsBusinessOwner=(user.accountType == 'Business');
       this.loggedInAsCustomer=!this.loggedInAsCustomer;
     } else {
       this.loggedInAsBusinessOwner=false;

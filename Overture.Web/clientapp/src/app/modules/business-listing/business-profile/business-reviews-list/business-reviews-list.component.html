@@ -1,10 +1,10 @@
 			<!-- Boxed List -->
 			<div class="boxed-list margin-bottom-60">
-				<div class="boxed-list-headline">
+				<div class="boxed-list-headline" *ngIf="reviews.length>0">
 					<h3><i class="icon-material-outline-thumb-up"></i> Reviews</h3>
 				</div>
 				<ul class="boxed-list-ul">
-					<li *ngFor="let review of reviews"> 
+					<li *ngFor="let review of reviews | paginate: paginationConfig "> 
 						<div class="boxed-list-item">
 							<!-- Content -->
 							<div class="item-content">
@@ -25,22 +25,35 @@
         <!-- Button -->
         <div class="clearfix"></div>
 				
-				<a href="" *ngIf="isUserAuthenticated"  (click)="addReview($event)" class="apply-now-button popup-with-zoom-anim margin-bottom-30 margin-top-50">Leave a Review <i class="icon-material-outline-arrow-right-alt"></i></a>
+				<a href="javascript:void(0);" *ngIf="isUserAuthenticated"  (click)="openReviewDialog($event)" class="apply-now-button popup-with-zoom-anim margin-bottom-30 margin-top-50">Leave a Review <i class="icon-material-outline-arrow-right-alt"></i></a>
         
-
-				<!-- Pagination -->
-				<div class="clearfix"></div>
-				<div class="pagination-container margin-top-40 margin-bottom-10">
-					<nav class="pagination">
-						<ul>
-							<li><a href="#" class="ripple-effect current-page">1</a></li>
-							<li><a href="#" class="ripple-effect">2</a></li>
-							<li class="pagination-arrow"><a href="#" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>
-						</ul>
-					</nav>
-				</div>
-				<div class="clearfix"></div>
-				<!-- Pagination / End -->
+        <!-- Pagination -->
+        <div class="clearfix"></div>
+        <div class="row" *ngIf="reviews.length>0">
+          <div class="col-md-12">
+            <!-- Pagination -->
+            <pagination-template #p="paginationApi"
+                                [id]="paginationConfig.id"
+                                (pageChange)="pageChange($event)">
+              <div class="pagination-container margin-top-40 margin-bottom-60">
+                <nav class="pagination">
+                  <ul>
+                    <li class="pagination-arrow" [class.disabled]="p.isFirstPage()">
+                      <a *ngIf="!p.isFirstPage()" (click)="p.previous()" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-left"></i></a>
+                    </li>
+                    <li *ngFor="let page of p.pages" >
+                      <a class="ripple-effect" [class.current-page]="p.getCurrent() === page.value" (click)="p.setCurrent(page.value)">{{ page.label }}</a>
+                    </li>
+                    <li class="pagination-arrow" [class.disabled]="p.isLastPage()">
+                      <a  *ngIf="!p.isLastPage()" (click)="p.next()" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </pagination-template>
+          </div>
+        </div>
+        <!-- Pagination / End -->
 
 			</div>
 			<!-- Boxed List / End -->

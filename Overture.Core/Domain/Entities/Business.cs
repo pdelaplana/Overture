@@ -14,7 +14,7 @@ namespace Overture.Core.Domain.Entities
 		public string Owner { get; set; }
 		public string Tagline { get; set; }
 		public string Description { get; set; } 
-		public FileAttachment Picture { get; set; }
+		public StoredFile Picture { get; set; }
 		public decimal MinumumRate { get; set; }
 		public bool IsTrading { get; set; }
 		public bool IsVerified { get; set; }
@@ -22,7 +22,7 @@ namespace Overture.Core.Domain.Entities
 		public IEnumerable<BusinessService> BusinessServices { get; set; }
 		public IEnumerable<ServiceArea> ServiceAreas { get; set; }
 		public IEnumerable<ContactMethod> ContactMethods { get; set; }
-		public IEnumerable<FileAttachment> FileAttachments { get; set; }
+		public IEnumerable<StoredFile> StoredFiles { get; set; }
 
 	}
 }

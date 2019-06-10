@@ -28,18 +28,36 @@ namespace Overture.Web.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+		private readonly ILogger _logger = null;
+
+		public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+			_logger = logger;
+
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+		
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
         {
+			//
+			// Enable cross origin scripting
+			//
 			services.AddCors();
+
+			//
+			// Enable MVC
+			//
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			
+			
+			//
+			// Emanble memory caching
+			//
+			services.AddMemoryCache();
 
 			//
 			// Global Settings 
@@ -95,6 +113,7 @@ namespace Overture.Web.API
 			services.AddScoped<IBusinessServiceCategoryRepository, BusinessServiceCategoryRepository>();
 			services.AddScoped<IBusinessRepository, BusinessRepository>();
 			services.AddScoped<IReviewRepository, ReviewRepository>();
+			services.AddScoped<IJobRepository, JobRepository>();
 
 			services.AddScoped<IFileStoreService, FileStoreService>();
 			services.AddScoped<IUserService, Auth0UserService>();
@@ -138,8 +157,17 @@ namespace Overture.Web.API
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
+
+			_logger.LogInformation("Web Application Starting Up");
+			/*
+			loggerFactory
+				.AddConsole()
+				.AddDebug()
+				.AddEventSourceLogger();
+			*/
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();

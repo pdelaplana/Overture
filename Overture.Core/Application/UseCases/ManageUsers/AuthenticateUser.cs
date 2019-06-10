@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoMapper;
 using System.Threading;
 using System.Threading.Tasks;
+using Overture.Core.Application.Models;
 using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.ManageUsers
 {
-    public class AuthenticateUser : UseCase<OvertureUser>
+    public class AuthenticateUser : UseCase<AuthenticatedUserModel>
     {
 		public string Email { get; set; }
 		public string Password { get; set; }
     }
 
-	public class AuthenticateUserHandler : IUseCaseHandler<AuthenticateUser, OvertureUser>
+	public class AuthenticateUserHandler : IUseCaseHandler<AuthenticateUser, AuthenticatedUserModel>
 	{
 		private readonly IAuthenticationService _authenticationService = null;
 		private readonly IUserService _userService = null;
+		private readonly IMapper _mapper = null;
 
-		public AuthenticateUserHandler(IAuthenticationService authenticationService, IUserService userService)
+		public AuthenticateUserHandler(
+			IAuthenticationService authenticationService, 
+			IUserService userService,
+			IMapper mapper)
 		{
 			_authenticationService = authenticationService;
 			_userService = userService;
+			_mapper = mapper;
 		}
 
-		public async Task<UseCaseResult<OvertureUser>> Handle(AuthenticateUser request, CancellationToken cancellationToken)
+		public async Task<UseCaseResult<AuthenticatedUserModel>> Handle(AuthenticateUser request, CancellationToken cancellationToken)
 		{
 			var result = await _authenticationService.AuthenticateAsync(request.Email, request.Password);
 			if (result != null)
@@ -33,15 +40,16 @@ namespace Overture.Core.Application.UseCases.ManageUsers
 				// current signin info
 				if (user != null)
 				{
-					user.AccessToken = result.AccessToken;
-					user.IdToken = result.IdToken;
-					user.ExpiresIn = result.ExpiresIn;
-					user.LastSigninDate = DateTime.UtcNow;
-					return UseCaseResult<OvertureUser>.Create(user);
+					var model = _mapper.Map<AuthenticatedUserModel>(user);
+					model.AccessToken = result.AccessToken;
+					model.IdToken = result.IdToken;
+					model.ExpiresIn = result.ExpiresIn;
+					model.LastSigninDate = DateTime.UtcNow;
+					return UseCaseResult<AuthenticatedUserModel>.Create(model);
 				}
 				
 			}
-			return UseCaseResult<OvertureUser>.CreateError();
+			return UseCaseResult<AuthenticatedUserModel>.CreateError();
 
 		}
 	}

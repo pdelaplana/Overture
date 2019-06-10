@@ -16,8 +16,6 @@ namespace Overture.Web.API.Controllers
     [ApiController]
     public class BusinessesController : OvertureController
     {
-		
-	
 		// GET api/businesses
 		[HttpGet]
 		public async Task<ActionResult<UseCaseResult<IEnumerable<BusinessModel>>>> Get([FromQuery]GetBusinesses request)

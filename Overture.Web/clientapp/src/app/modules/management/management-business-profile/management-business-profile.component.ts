@@ -1,7 +1,7 @@
 import { AddReviewDialogComponent } from './../../business-listing/business-profile/add-review-dialog/add-review-dialog.component';
 import { ReferenceDataService } from '@app/_services/reference-data.service';
 import { FileStoreService } from './../../../_services/file-store.service';
-import { FileAttachment } from './../../../_models/file-attachment';
+import { StoredFile } from '../../../_models/stored-file';
 import { NotificationService } from '@app/_services/notification.service';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { Business } from '@app/_models/business';
@@ -12,6 +12,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ContactMethod } from '@app/_models/contact-method';
 import { Address } from '@app/_models/address';
 import { ServiceArea } from '@app/_models/service-area';
+import { Observable } from 'rxjs';
 
 declare var notifyOnChange: any;
 declare var closeNotification: any;
@@ -53,11 +54,11 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
       owner: ['', [Validators.required]],
       tagline: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      picture:[new FileAttachment()],
+      picture:[new StoredFile()],
       isTrading: [false],
       serviceAreas: [],
       services: [],
-      fileAttachments: [],
+      storedFiles: [],
       phone: [],
       email: ['', [Validators.email]],
       twitter: [],
@@ -86,7 +87,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
         this.isTrading.setValue(businessProfile.isTrading, {onlySelf: true, emitEvent: false});
         this.serviceAreas.setValue(businessProfile.serviceAreas, {onlySelf: true, emitEvent: false});
         this.services.setValue(businessProfile.businessServices, {onlySelf: true, emitEvent: false});
-        this.fileAttachments.setValue(businessProfile.fileAttachments, {onlySelf: true, emitEvent: false});
+        this.storedFiles.setValue(businessProfile.storedFiles, {onlySelf: true, emitEvent: false});
         this.streetAddress1.setValue(businessProfile.address.streetAddress1, {onlySelf: true, emitEvent: false});
         this.streetAddress2.setValue(businessProfile.address.streetAddress2, {onlySelf: true, emitEvent: false});
         this.streetAddress3.setValue(businessProfile.address.streetAddress3, {onlySelf: true, emitEvent: false});
@@ -124,7 +125,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
   get isTrading() { return this.businessProfileForm.controls.isTrading; }  
   get serviceAreas() { return this.businessProfileForm.controls.serviceAreas; }
   get services() { return this.businessProfileForm.controls.services; }
-  get fileAttachments() { return this.businessProfileForm.controls.fileAttachments; }
+  get storedFiles() { return this.businessProfileForm.controls.storedFiles; }
   get phone() { return this.businessProfileForm.controls.phone; }
   get email() { return this.businessProfileForm.controls.email; }
   get twitter() { return this.businessProfileForm.controls.twitter; }
@@ -182,7 +183,7 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
     business.contactMethods.push(this.createContactMethod('Twitter', this.twitter.value));
     business.contactMethods.push(this.createContactMethod('LinkedIn', this.linkedIn.value));
 
-    business.fileAttachments = this.fileAttachments.value;
+    business.storedFiles = this.storedFiles.value;
 
     this.businessProfileService.update(business).subscribe(
       business => {
@@ -201,27 +202,29 @@ export class ManagementBusinessProfileComponent implements OnInit, OnDestroy {
 
   }
 
-  addFileAttachment(fileAttachment: FileAttachment){
-    let files = this.fileAttachments.value;
-    files.push(fileAttachment);
-    this.fileAttachments.setValue(files);
+  addStoredFile(StoredFile: StoredFile){
+    let files = this.storedFiles.value;
+    files.push(StoredFile);
+    this.storedFiles.setValue(files);
   }
 
-  deleteFileAttachment(fileReference:string){
+  deleteStoredFile(fileReference:string){
     this.fileStoreService.delete(fileReference).subscribe(
       result => {
         if (result){
-          let files : FileAttachment[] = this.fileAttachments.value;
+          let files : StoredFile[] = this.storedFiles.value;
           files = files.filter(f => f.fileReference!=fileReference);
-          this.fileAttachments.setValue(files);
+          this.storedFiles.setValue(files);
         }
       }
     )
   }
 
-  addPicture(fileAttachment: FileAttachment){
-    this.picture.setValue(fileAttachment);
+  addPicture(storedFile: StoredFile){
+    this.picture.setValue(storedFile);
   }
 
-  
+  canDeactivate(): Observable<boolean> | boolean { 
+    return !this.hasChanges;
+  }
 }

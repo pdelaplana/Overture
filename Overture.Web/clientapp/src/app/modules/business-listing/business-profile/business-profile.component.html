@@ -1,7 +1,7 @@
 
 <!-- Titlebar
 ================================================== -->
-<div class="single-page-header freelancer-header" data-background-image="images/single-freelancer.jpg">
+<div class="single-page-header freelancer-header" >
   <app-background-image imageUrl="url(assets/images/single-freelancer.jpg)"></app-background-image>
 	<div class="container">
 		<div class="row">
@@ -12,8 +12,10 @@
 						<div class="header-details">
 							<h3>{{business.name}} <span>{{business.tagline}}</span></h3>
 							<ul>
-								<li><div class="star-rating" data-rating="5.0"></div></li>
-								<li><img class="flag" src="images/flags/de.svg" alt=""> Germany</li>
+                <li>
+                  <div *ngIf="business.ratings.totalReviews>3" appStarRating class="star-rating" [rating]="business.ratings.averageRating"></div>
+                  <span *ngIf="business.ratings.totalReviews<4" class="company-not-rated margin-bottom-5">Minimum of 3 reviews required</span>
+                </li>
 								<li><div class="verified-badge-with-title">Verified</div></li>
 							</ul>
 						</div>
@@ -40,9 +42,10 @@
         </p>
       </div>
   
-      <app-attachments-carousel [attachments]="business.fileAttachments"></app-attachments-carousel>
+      <app-attachments-carousel [attachments]="business.storedFiles"></app-attachments-carousel>
 
-      <app-business-reviews-list [businessId]="business.id" (onAddReview)="openReviewDialog()"></app-business-reviews-list>	
+      <app-business-reviews-list [businessId]="business.id" (onOpenReviewDialog)="openReviewDialog()"></app-business-reviews-list>	
+      
 		</div>
 		
 
@@ -58,37 +61,37 @@
 				</div>
 
 				<!-- Button -->
-				<a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-bottom-50">Request Quote <i class="icon-material-outline-arrow-right-alt"></i></a>
+				<a href="javascript:void(0);" class="apply-now-button popup-with-zoom-anim margin-bottom-50" (click)="openRequestQuoteDialog()" >Request Quote <i class="icon-material-outline-arrow-right-alt"></i></a>
         
 				<!-- Freelancer Indicators -->
 				<div class="sidebar-widget">
-					<div class="freelancer-indicators">
+					<div class="freelancer-indicators" *ngIf="business.ratings.totalReviews>3">
 
 						<!-- Indicator -->
 						<div class="indicator">
-							<strong>88%</strong>
-							<div class="indicator-bar" data-indicator-percentage="88"><span></span></div>
-							<span>Job Success</span>
+							<strong>{{business.ratings.jobSatisfaction.toFixed(0)}}%</strong>
+							<div class="indicator-bar" appIndicatorBar [percentage]="business.ratings.jobSatisfaction"><span></span></div>
+							<span>Client Satisfaction</span>
 						</div>
 
 						<!-- Indicator -->
 						<div class="indicator">
-							<strong>100%</strong>
-							<div class="indicator-bar" data-indicator-percentage="100"><span></span></div>
+							<strong>{{business.ratings.recommendation.toFixed(0)}}%</strong>
+							<div class="indicator-bar" appIndicatorBar [percentage]="business.ratings.recommendation"><span></span></div>
 							<span>Recommendation</span>
 						</div>
 						
 						<!-- Indicator -->
 						<div class="indicator">
-							<strong>90%</strong>
-							<div class="indicator-bar" data-indicator-percentage="90"><span></span></div>
+							<strong>{{business.ratings.onTime.toFixed(0)}}%</strong>
+							<div class="indicator-bar" appIndicatorBar [percentage]="business.ratings.onTime"><span></span></div>
 							<span>On Time</span>
 						</div>	
 											
 						<!-- Indicator -->
 						<div class="indicator">
-							<strong>80%</strong>
-							<div class="indicator-bar" data-indicator-percentage="80"><span></span></div>
+							<strong>{{business.ratings.onBudget.toFixed(0)}}%</strong>
+							<div class="indicator-bar" appIndicatorBar [percentage]="business.ratings.onBudget"><span></span></div>
 							<span>On Budget</span>
 						</div>
 					</div>
@@ -175,4 +178,8 @@
 	</div>
 </div>
 
-<app-add-review-dialog #addReviewDialog [businessId]="business.id" ></app-add-review-dialog>
+<!-- Dialog
+================================================== -->
+<app-add-review-dialog #addReviewDialog [businessId]="business.id" (onSave)="reviewAdded($event)" ></app-add-review-dialog>
+
+<app-request-quote-dialog [businessId]="business.id" [businessOwner]="business.name"></app-request-quote-dialog>

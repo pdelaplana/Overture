@@ -1,5 +1,5 @@
 export class Registration {
   email: string;
   password: string;
-  registerAsBusiness: boolean;
+  accountType: string;
 }

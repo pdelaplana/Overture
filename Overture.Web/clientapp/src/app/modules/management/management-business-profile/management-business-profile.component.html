@@ -233,15 +233,15 @@
                     
                   <!-- Attachments -->
                   <div class="attachments-container margin-top-0 margin-bottom-0 " >
-                    <div class="attachment-box ripple-effect col-xl-3" *ngFor="let fileAttachment of fileAttachments.value">
-                      <span>{{fileAttachment.fileName}}</span>
-                      <i>{{fileAttachment.fileType}}</i>
-                      <button class="remove-attachment" appTippyTooltips data-tippy-placement="top" title="Remove" (click)="deleteFileAttachment(fileAttachment.fileReference)"></button>
+                    <div class="attachment-box ripple-effect col-xl-3" *ngFor="let storedFile of storedFiles.value">
+                      <span>{{storedFile.fileName}}</span>
+                      <i>{{storedFile.fileType}}</i>
+                      <button class="remove-attachment" appTippyTooltips data-tippy-placement="top" title="Remove" (click)="deleteStoredFile(storedFile.fileReference)"></button>
                     </div>
 
                   </div>
                   <div class="clearfix"></div>                  
-                  <app-file-uploader (onFileUploaded)="addFileAttachment($event)"></app-file-uploader>
+                  <app-file-uploader (onFileUploaded)="addStoredFile($event)"></app-file-uploader>
                   
                 </div>
             </div>
@@ -292,7 +292,7 @@
   
   <!-- Button -->
   <div class="col-xl-12">
-    <a href="#" class="button ripple-effect big margin-top-30" (click)="saveChanges()">Save Changes</a>
+    <a href="javascript:return false;" class="button ripple-effect big margin-top-30" (click)="saveChanges()">Save Changes</a>
   </div>
 
 </div>

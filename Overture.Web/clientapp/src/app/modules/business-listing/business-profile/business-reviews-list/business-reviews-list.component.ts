@@ -3,6 +3,7 @@ import { AuthenticationService } from '@app/_services/authentication.service';
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ReviewService } from '@app/_services/review.service';
 import { Review } from '@app/_models/review';
+import { PaginationInstance } from 'ngx-pagination';
 
 @Component({
   selector: 'app-business-reviews-list',
@@ -11,15 +12,30 @@ import { Review } from '@app/_models/review';
 })
 export class BusinessReviewsListComponent implements OnInit {
 
+  id: string;
   reviews: Review[] = [];
   isUserAuthenticated: boolean = false;
   
   @Input() set businessId(value:string){
     if (value != undefined){
-      this.fetchReviews(value);  
+      this.id = value;
+      this.fetchReviews(this.id);  
     }
   };
-  @Output() onAddReview = new EventEmitter()
+  @Output() onOpenReviewDialog = new EventEmitter();
+
+  p: number = 1;
+
+  paginationConfig: PaginationInstance = {
+    id: 'custom',
+    itemsPerPage: 5,
+    currentPage: 1
+  };
+
+  pageChange(value){
+    this.paginationConfig.currentPage = value;
+    window.scrollTo(0,0);
+  }
 
   constructor(
     private authenticationService:AuthenticationService,
@@ -28,8 +44,6 @@ export class BusinessReviewsListComponent implements OnInit {
 
   ngOnInit() {
     this.isUserAuthenticated = this.authenticationService.isUserAuthenticated;
-
-   
   }
 
   fetchReviews(id:string){
@@ -39,9 +53,8 @@ export class BusinessReviewsListComponent implements OnInit {
     })
   }
 
-  addReview($event){
-    $event.preventDefault();
-    this.onAddReview.emit();
+  openReviewDialog($event){
+    this.onOpenReviewDialog.emit();
   }
 
 }

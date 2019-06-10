@@ -16,7 +16,7 @@ export class RegistrationFormComponent implements OnInit {
   registrationForm : FormGroup;
   submitted = false;
 
-  @Input() accountType:string = "";
+  @Input() selectedAccountType:string = "";
 
   constructor(
     private registrationService: RegistrationService,
@@ -29,25 +29,25 @@ export class RegistrationFormComponent implements OnInit {
 
   ngOnInit() {
     this.registrationForm = this.formBuilder.group({
-      registerType: ['personal', Validators.required],
+      accountType: ['Personal', Validators.required],
       email: ['', [Validators.required, Validators.email], this.validationService.checkEmailIsUnique.bind(this.validationService)],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     }, {
       validator: MustMatch ('password', 'confirmPassword')
     });
-    if (this.accountType)
-      this.registerType.setValue(this.accountType)
+    if (this.selectedAccountType)
+      this.accountType.setValue(this.selectedAccountType)
   }
 
   // convenience getters for easy access to form fields
   get f() { return this.registrationForm.controls; }
-  get registerType() { return this.registrationForm.controls.registerType; }
+  get accountType() { return this.registrationForm.controls.accountType; }
   get email() { return this.registrationForm.controls.email; }
   get password() { return this.registrationForm.controls.password; }
 
   setAccountType(accountType:string){
-    this.registerType.setValue(accountType);
+    this.accountType.setValue(accountType);
   }
 
   onSubmit(){
@@ -61,7 +61,7 @@ export class RegistrationFormComponent implements OnInit {
     this.registrationService.register({ 
       email: this.email.value,
       password: this.password.value,
-      registerAsBusiness: (this.registerType.value == 'business')
+      accountType: this.accountType.value 
     })
     .subscribe(
       user=>{

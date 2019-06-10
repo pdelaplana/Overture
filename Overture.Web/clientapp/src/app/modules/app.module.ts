@@ -24,7 +24,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
   declarations: [
     AppComponent,
     RegisterComponent,
-    SignInComponent,    
+    SignInComponent,
   ],
   imports: [
     BrowserModule,

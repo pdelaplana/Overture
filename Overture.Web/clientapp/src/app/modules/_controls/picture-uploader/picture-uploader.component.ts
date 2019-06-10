@@ -1,10 +1,11 @@
 import { FileStoreService } from '@app/_services/file-store.service';
-import { FileAttachment } from '@app/_models/file-attachment';
+import { StoredFile } from '@app/_models/stored-file';
 import { ApiResponse } from '@app/_models/api-response';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-picture-uploader',
@@ -60,7 +61,7 @@ export class PictureUploaderComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log('ImageUpload:uploaded:', item, status, response);
       let apiResponse: ApiResponse = JSON.parse(response);
-      this.onPictureUploaded.emit(<FileAttachment>apiResponse.data);
+      this.onPictureUploaded.emit(<StoredFile>apiResponse.data);
      };
      
   }

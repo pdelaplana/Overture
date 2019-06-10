@@ -1,4 +1,4 @@
-import { FileAttachment } from '@app/_models/file-attachment';
+import { StoredFile } from '@app/_models/stored-file';
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -18,7 +18,7 @@ export class AttachmentsCarouselComponent implements OnInit {
     'infinite': false
   };
 
-  @Input() attachments: FileAttachment[] = [];
+  @Input() attachments: StoredFile[] = [];
 
   constructor() { }
 

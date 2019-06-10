@@ -16,9 +16,11 @@ namespace Overture.Core.Application.AutoMapper.Profiles
     {
 		public MappingProfile()
 		{
-			CreateMap<Business, BusinessModel>();
-			CreateMap<FileAttachment, FileAttachmentModel>();
-			CreateMap<IFileProperties, FileAttachmentModel>();
+			CreateMap<Business, BusinessModel>()
+				.ForMember(dest => dest.Ratings, opts => opts.MapFrom<BusinessRatingsResolver>());
+
+			CreateMap<StoredFile, StoredFileModel>();
+			CreateMap<IFileProperties, StoredFileModel>();
 			CreateMap<BusinessService, BusinessServiceModel>();
 			CreateMap<BusinessServiceCategory, BusinessServiceCategoryModel>()
 				.ForMember(dest => dest.Description, opts => opts.MapFrom<BusinessServiceCategoryDescriptionResolver>())
@@ -28,6 +30,15 @@ namespace Overture.Core.Application.AutoMapper.Profiles
 				.ForMember(dest => dest.ReviewerName, opts => opts.MapFrom<UserDisplayNameResolver, string>(src => src.Reviewer))
 				.ForMember(dest => dest.BusinessName, opts => opts.MapFrom<BusinessNameResolver, Guid>(src=> src.BusinessId));
 
+			CreateMap<Job, JobModel>();
+
+			CreateMap<Quote, QuoteModel>()
+				.ForMember(dest => dest.BusinessName, opts => opts.MapFrom<BusinessNameResolver, Guid>(src => src.QuotedByBusinessId));
+
+			CreateMap<OvertureUser, UserModel>()
+				.ForMember(dest => dest.AccountType, opts => opts.MapFrom(src => src.AccountType.ToString()));
+			CreateMap<OvertureUser, AuthenticatedUserModel>()
+				.ForMember(dest => dest.AccountType, opts => opts.MapFrom(src => src.AccountType.ToString()));
 		}
 	}
 }

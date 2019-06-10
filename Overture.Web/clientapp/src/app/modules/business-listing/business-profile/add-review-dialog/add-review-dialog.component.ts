@@ -1,7 +1,7 @@
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { CreateReviewRequest } from '@app/_requests/create-review-request';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ReviewService } from '@app/_services/review.service';
 import { NotificationService } from '@app/_services/notification.service';
 
@@ -17,6 +17,10 @@ export class AddReviewDialogComponent implements OnInit {
   reviewForm: FormGroup;
 
   @Input() businessId:string;
+
+  @Output() onSave = new EventEmitter();
+  @Output() onClose = new EventEmitter();
+
 
   @ViewChild('addReviewDialog') dialog:ElementRef; 
 
@@ -43,7 +47,6 @@ export class AddReviewDialogComponent implements OnInit {
       onBudget:[false]
     })
     
-    
   }
 
   get reviewDate() { return this.reviewForm.controls.reviewDate; }
@@ -68,12 +71,24 @@ export class AddReviewDialogComponent implements OnInit {
     this.reviewService.create(request).subscribe(
       review => {
         this.notificationService.success('Your changes have been saved.');
+        this.onSave.emit();
         this.close();
       }
     )
   }
 
+  clear(){
+    this.reviewDate.setValue(null, {onlySelf: true, emitEvent: false});
+    this.content.setValue(null, {onlySelf: true, emitEvent: false});
+    this.recommend.setValue(null, {onlySelf: true, emitEvent: false});
+    this.onTime.setValue(null, {onlySelf: true, emitEvent: false});
+    this.onBudget.setValue(null, {onlySelf: true, emitEvent: false});
+    this.satisfied.setValue(null, {onlySelf: true, emitEvent: false});
+    this.rating.setValue(null, {onlySelf: true, emitEvent: false});
+  }
+
   open(){
+    this.clear();
     $.magnificPopup.open({
       type: 'inline',
 
@@ -99,6 +114,7 @@ export class AddReviewDialogComponent implements OnInit {
 
   close(){
     $.magnificPopup.close();
+    this.onClose.emit();
   }
 
 }

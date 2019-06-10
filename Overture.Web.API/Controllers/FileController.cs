@@ -29,7 +29,7 @@ namespace Overture.Web.API.Controllers
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Authorize]
-		public async Task<ActionResult<UseCaseResult<FileAttachmentModel>>> UploadFile(IFormFile file)
+		public async Task<ActionResult<UseCaseResult<StoredFileModel>>> UploadFile(IFormFile file)
 		{
 			try
 			{

@@ -30,7 +30,7 @@
           
           <!-- Avatar -->
           <div class="freelancer-avatar">
-            <div class="verified-badge"></div>
+            <div *ngIf="business.isVerified" class="verified-badge"></div>
             <a [routerLink]="['profile', business.altReference ]"><app-picture [fileReference]="business.picture ? business.picture.fileReference: null"></app-picture></a>
           </div>
 
@@ -39,9 +39,10 @@
             <h4><a [routerLink]="['profile', business.altReference ]">{{business.name}} <img class="flag" src="images/flags/gb.svg" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
             <span>{{business.tagline}}</span>
             <!-- Rating -->
-            <div class="freelancer-rating">
-              <div class="star-rating" data-rating="4.9"></div>
+            <div *ngIf="business.ratings.totalReviews>3" class="freelancer-rating">
+              <div  appStarRating class="star-rating" [rating]="business.ratings.averageRating"></div>
             </div>
+            <span *ngIf="business.ratings.totalReviews<4" class="company-not-rated margin-bottom-5">Minimum of 3 reviews required</span>
           </div>
         </div>
       </div>
@@ -52,7 +53,7 @@
           <ul>
             <li>Location <strong><i class="icon-material-outline-location-on"></i> London</strong></li>
             <li>Rate <strong>$60 / hr</strong></li>
-            <li>Job Success <strong>95%</strong></li>
+            <li>Job jobSatisfaction <strong>{{business.ratings.jobSatisfaction.toFixed(0)}}%</strong></li>
           </ul>
         </div>
         <a [routerLink]="['profile', business.altReference ]" class="button button-sliding-icon ripple-effect">View Profile <i class="icon-material-outline-arrow-right-alt"></i></a>

@@ -1,4 +1,4 @@
-import { FileAttachment } from '@app/_models/file-attachment';
+import { StoredFile } from '@app/_models/stored-file';
 import { ApiResponse } from '@app/_models/api-response';
 import { AuthenticationService } from '@app/_services/authentication.service';
 import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
@@ -37,7 +37,7 @@ export class FileUploaderComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log('ImageUpload:uploaded:', item, status, response);
       let apiResponse: ApiResponse = JSON.parse(response);
-      this.onFileUploaded.emit(<FileAttachment>apiResponse.data);
+      this.onFileUploaded.emit(<StoredFile>apiResponse.data);
      };
   }
 

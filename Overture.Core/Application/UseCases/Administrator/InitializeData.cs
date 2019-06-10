@@ -222,7 +222,7 @@ namespace Overture.Core.Application.UseCases.Administrator
 							ContactMethods = new List<ContactMethod>(),
 							BusinessServices = services,
 							ServiceAreas = areas,
-							FileAttachments = new List<FileAttachment>()
+							StoredFiles = new List<StoredFile>()
 						});
 						counter++;
 					}

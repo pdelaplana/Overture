@@ -1,7 +1,7 @@
-import { ApiResponse } from './../../../../../_models/api-response';
-import { FileAttachment } from './../../../../../_models/file-attachment';
+import { ApiResponse } from '@app/_models/api-response';
+import { StoredFile } from '@app/_models/stored-file';
 import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AuthenticationService } from '@app/_services/authentication.service';
 
@@ -37,7 +37,7 @@ export class FileUploadComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       console.log('ImageUpload:uploaded:', item, status, response);
       let apiResponse: ApiResponse = JSON.parse(response);
-      this.onFileUploaded.emit(<FileAttachment>apiResponse.data);
+      this.onFileUploaded.emit(<StoredFile>apiResponse.data);
      };
   }
 

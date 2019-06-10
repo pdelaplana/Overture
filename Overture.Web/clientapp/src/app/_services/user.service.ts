@@ -1,3 +1,4 @@
+import { UpdateUserRequest } from './../_requests/update-user-request';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '@app/_models/user';
@@ -19,6 +20,14 @@ export class UserService {
 
   getUserByEmail(email:string):Observable<User>{
     return this.http.get<ApiResponse>(this.apiUrl, { params: { email: email }} )
+      .pipe(
+        map(result => { return <User>result.data }),
+        
+      )
+  }
+
+  update(request:UpdateUserRequest):Observable<User>{
+    return this.http.put<ApiResponse>(this.apiUrl, request )
       .pipe(
         map(result => { return <User>result.data }),
         

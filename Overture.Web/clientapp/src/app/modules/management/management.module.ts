@@ -1,8 +1,9 @@
+import { MyDatePickerModule } from 'mydatepicker';
+import { FileUploadModule } from 'ng2-file-upload';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FileSelectDirective } from 'ng2-file-upload';
 
 import { ControlsModule } from './../_controls/controls.module';
 import { ManagementComponent } from './management.component';
@@ -12,8 +13,9 @@ import { ManagementBusinessProfileComponent } from './management-business-profil
 import { ManagementFooterComponent } from './management-footer/management-footer.component';
 import { ManagementAccountSettingsComponent } from './management-account-settings/management-account-settings.component';
 import { FileUploadComponent } from './management-business-profile/_controls/file-upload/file-upload.component';
-import { PictureUploaderComponent } from './management-business-profile/_controls/picture-uploader/picture-uploader.component';
 import { FileUploaderComponent } from './management-business-profile/_controls/file-uploader/file-uploader.component';
+import { ManagementJobListingComponent } from './management-job-listing/management-job-listing.component';
+import { EditJobDialogComponent } from './management-job-listing/_controls/edit-job-dialog/edit-job-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,9 @@ import { FileUploaderComponent } from './management-business-profile/_controls/f
     ManagementFooterComponent,
     ManagementAccountSettingsComponent,
     FileUploadComponent,
-    FileSelectDirective,
-    PictureUploaderComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
+    ManagementJobListingComponent,
+    EditJobDialogComponent
   ],
   imports: [
     ControlsModule,
@@ -33,7 +35,9 @@ import { FileUploaderComponent } from './management-business-profile/_controls/f
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    ManagementRoutingModule
+    MyDatePickerModule,
+    ManagementRoutingModule,
+    FileUploadModule
   ]
 })
 export class ManagementModule { }

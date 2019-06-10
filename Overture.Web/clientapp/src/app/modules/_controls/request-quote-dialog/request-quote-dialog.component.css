@@ -1,0 +1,53 @@
+::ng-deep my-date-picker >>> .mydp {
+  margin-bottom: 22px!important;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.05);
+  height:48px!important;
+}
+
+::ng-deep my-date-picker >>> .mydp .selection{
+  padding: 0 20px;
+  height:48px!important;
+
+}
+
+::ng-deep my-date-picker >>> .mydp .selbtngroup{
+
+  height:48px!important;
+  left:0px;
+
+}
+
+
+.mydp .selection,
+.mydp .weekdaytitle,
+.mydp .monthinput,
+.mydp .yearinput {
+    font-weight: normal;
+}
+.mydp .weekdaytitle {
+    color: #000;
+}
+.mydp,
+.mydp .selectiongroup,
+.mydp .selection,
+.mydp .selection,
+.mydp .selector {
+    border-radius: 4px;
+    
+}
+.mydp .header {
+    border-radius: 4px 4px 0 0;
+}
+.mydp .caltable {
+    border-radius: 0 0 4px 4px;
+}
+.mydp .caltable tbody tr:nth-child(6) td:first-child {
+    border-bottom-left-radius: 4px;
+}
+.mydp .caltable tbody tr:nth-child(6) td:last-child {
+    border-bottom-right-radius: 4px;
+}
+.mydp .btnpicker {
+    border-radius: 0 4px 4px 0;
+}

@@ -20,13 +20,13 @@ namespace Overture.Core.Application.UseCases.ManageBusinesses
 		public string Owner { get; set; }
 		public string Description { get; set; }
 		public string Tagline { get; set; }
-		public FileAttachment Picture { get; set; }
+		public StoredFile Picture { get; set; }
 		public bool IsTrading { get; set; }
 		public Address Address { get; set; }
 		public IEnumerable<BusinessService> BusinessServices { get; set; }
 		public IEnumerable<ContactMethod> ContactMethods { get; set; }
 		public IEnumerable<ServiceArea> ServiceAreas { get; set; }
-		public IEnumerable<FileAttachment> FileAttachments { get; set; }
+		public IEnumerable<StoredFile> StoredFiles { get; set; }
     }
 
 	public class UpdateBusinessHandler : IUseCaseHandler<UpdateBusiness, BusinessModel>
@@ -65,7 +65,7 @@ namespace Overture.Core.Application.UseCases.ManageBusinesses
 				business.ServiceAreas = request.ServiceAreas;
 				business.BusinessServices = request.BusinessServices;
 				business.ContactMethods = request.ContactMethods;
-				business.FileAttachments = request.FileAttachments;
+				business.StoredFiles = request.StoredFiles;
 
 				if (business.Id == Guid.Empty)
 				{

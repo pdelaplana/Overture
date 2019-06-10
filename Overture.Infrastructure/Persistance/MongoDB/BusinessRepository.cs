@@ -14,11 +14,6 @@ namespace Overture.Infrastructure.Persistance.MongoDB
 	{
 		public BusinessRepository(MongoDBContext context) : base(context, "businesses")
 		{
-
 		}
-
-
-
-
 	}
 }

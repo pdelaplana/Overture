@@ -25,7 +25,7 @@ namespace Overture.Core.Application.AutoMapper.Resolvers
 			var user = Task.Run(async () =>  await _userService.GetUserAsync(sourceMember)).Result;
 			if (user != null)
 			{
-				return user.DisplayName;
+				return user.Name;
 			} else
 			{
 				return "";

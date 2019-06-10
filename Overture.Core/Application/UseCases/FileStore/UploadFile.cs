@@ -10,14 +10,14 @@ using Overture.Core.Services;
 
 namespace Overture.Core.Application.UseCases.FileStore
 {
-    public class UploadFile : UseCase<FileAttachmentModel>
+    public class UploadFile : UseCase<StoredFileModel>
     {
 		public string FileName { get; set; }
 		public string ContentType { get; set; }
 		public byte[] Contents { get; set; }
     }
 
-	public class UploadFileHandler : IUseCaseHandler<UploadFile, FileAttachmentModel>
+	public class UploadFileHandler : IUseCaseHandler<UploadFile, StoredFileModel>
 	{
 		private readonly IFileStoreService _fileStoreService = null;
 		private readonly IMapper _mapper = null;
@@ -28,7 +28,7 @@ namespace Overture.Core.Application.UseCases.FileStore
 			_mapper = mapper;
 		}
 
-		public async Task<UseCaseResult<FileAttachmentModel>> Handle(UploadFile request, CancellationToken cancellationToken)
+		public async Task<UseCaseResult<StoredFileModel>> Handle(UploadFile request, CancellationToken cancellationToken)
 		{
 			try
 			{
@@ -36,21 +36,21 @@ namespace Overture.Core.Application.UseCases.FileStore
 				{
 					if (request.Contents.Length > 0)
 					{
-						return UseCaseResult<FileAttachmentModel>.Create( _mapper.Map<IFileProperties, FileAttachmentModel>(await _fileStoreService.PostAsync(request.FileName, request.Contents, request.ContentType)));
+						return UseCaseResult<StoredFileModel>.Create( _mapper.Map<IFileProperties, StoredFileModel>(await _fileStoreService.PostAsync(request.FileName, request.Contents, request.ContentType)));
 					}
 					else
 					{
-						return UseCaseResult<FileAttachmentModel>.CreateError(resultText: "File Contents are empty");
+						return UseCaseResult<StoredFileModel>.CreateError(resultText: "File Contents are empty");
 					}
 				}
 				else
 				{
-					return UseCaseResult<FileAttachmentModel>.CreateError(resultText: "No File Name Specified");
+					return UseCaseResult<StoredFileModel>.CreateError(resultText: "No File Name Specified");
 				}
 			}
 			catch (Exception e)
 			{
-				return UseCaseResult<FileAttachmentModel>.CreateError(resultText: e.Message);
+				return UseCaseResult<StoredFileModel>.CreateError(resultText: e.Message);
 			}
 		}
 	}
