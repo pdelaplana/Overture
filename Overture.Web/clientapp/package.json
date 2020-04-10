@@ -21,7 +21,7 @@
     "@angular/router": "~7.1.0",
     "@ng-select/ng-select": "^2.16.2",
     "angular-ng-autocomplete": "^1.1.9",
-    "auth0-js": "^9.10.0",
+    "auth0-js": "^9.13.2",
     "core-js": "^2.5.4",
     "moment": "^2.23.0",
     "mydatepicker": "^2.6.6",
